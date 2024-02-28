@@ -2,7 +2,7 @@ package com.example.weddingCard.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class SurveyDTO {
+public class SurveyDto {
 
     @JsonProperty("has_video")
     private Boolean hasVideo;
