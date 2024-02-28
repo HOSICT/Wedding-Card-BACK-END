@@ -1,6 +1,6 @@
 package com.example.weddingCard.service;
 
-import com.example.weddingCard.dto.SurveyDTO;
+import com.example.weddingCard.dto.SurveyDto;
 import com.example.weddingCard.entity.Survey;
 import com.example.weddingCard.entity.User;
 import com.example.weddingCard.repository.SurveyRepository;
@@ -24,7 +24,7 @@ public class SurveyService {
     }
 
     @Transactional
-    public void createOrUpdateSurveyAndUser(SurveyDTO surveyDTO, String userId) {
+    public void createOrUpdateSurveyAndUser(SurveyDto surveyDTO, String userId) {
         User user = userRepository.findById(userId)
                 .orElseGet(() -> {
                     User newUser = new User();
