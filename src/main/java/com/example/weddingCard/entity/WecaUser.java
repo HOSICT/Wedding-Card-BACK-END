@@ -3,8 +3,8 @@ package com.example.weddingCard.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "weca_user")
+public class WecaUser {
 
     @Id
     @Column(name = "user_id")
