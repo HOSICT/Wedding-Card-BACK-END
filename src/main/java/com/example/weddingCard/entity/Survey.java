@@ -12,7 +12,7 @@ public class Survey {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private WecaUser user;
 
     @Column(name = "has_video")
     private Boolean hasVideo;
@@ -23,7 +23,7 @@ public class Survey {
         return id;
     }
 
-    public User getUser() {
+    public WecaUser getUser() {
         return user;
     }
 
@@ -39,7 +39,7 @@ public class Survey {
         this.id = id;
     }
 
-    public void setUser(User user) {
+    public void setUser(WecaUser user) {
         this.user = user;
     }
 
