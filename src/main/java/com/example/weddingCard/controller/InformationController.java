@@ -9,14 +9,16 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/save")
 public class InformationController {
 
     @Autowired
     private S3Service s3Service;
 
-    @PostMapping("/information")
+    @PostMapping("/save/information")
     public ResponseEntity<String> uploadFile(@RequestParam("images") MultipartFile[] files) {
+        if (files.length > 15) {
+            return ResponseEntity.badRequest().body("Error: Cannot upload more than 15 files at a time.");
+        }
         for (MultipartFile file : files) {
             try {
                 s3Service.uploadFile(file);

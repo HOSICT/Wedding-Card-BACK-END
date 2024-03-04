@@ -20,17 +20,17 @@ public class S3Service {
     @Value("${cloud.aws.s3.bucketName}")
     private String bucketName;
 
-    public void uploadFile(MultipartFile file) throws IOException {
-        File fileObj = convertMultiPartFileToFile(file);
-        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-        amazonS3.putObject(new PutObjectRequest(bucketName, fileName, fileObj));
-        fileObj.delete();
+    public void uploadFile(MultipartFile multipartFile) throws IOException {
+        File file = multiPartFileToFile(multipartFile);
+        String fileName = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
+        amazonS3.putObject(new PutObjectRequest(bucketName, fileName, file));
+        file.delete();
     }
 
-    private File convertMultiPartFileToFile(MultipartFile file) throws IOException {
+    private File multiPartFileToFile(MultipartFile file) throws IOException {
         File convertedFile = new File(file.getOriginalFilename());
-        try (FileOutputStream fos = new FileOutputStream(convertedFile)) {
-            fos.write(file.getBytes());
+        try (FileOutputStream fileOutputStream = new FileOutputStream(convertedFile)) {
+            fileOutputStream.write(file.getBytes());
         }
         return convertedFile;
     }
