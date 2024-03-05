@@ -3,8 +3,7 @@ package com.example.weddingCard.controller;
 import com.example.weddingCard.dto.SurveyDto;
 import com.example.weddingCard.entity.WecaUser;
 import com.example.weddingCard.service.SurveyService;
-import com.example.weddingCard.service.UserIdSerivce;
-import jakarta.transaction.Transactional;
+import com.example.weddingCard.service.UserIdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +17,10 @@ import java.util.Map;
 public class SurveyController {
 
     private final SurveyService surveyService;
-    private final UserIdSerivce userIdSerivce;
+    private final UserIdService userIdSerivce;
 
     @Autowired
-    public SurveyController(SurveyService surveyService, UserIdSerivce userIdSerivce) {
+    public SurveyController(SurveyService surveyService, UserIdService userIdSerivce) {
         this.surveyService = surveyService;
         this.userIdSerivce = userIdSerivce;
     }
