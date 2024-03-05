@@ -11,12 +11,15 @@ import org.springframework.stereotype.Service;
 public class InformationService {
 
     private final AccountsService accountsService;
+    private final RoadService roadService;
 
     @Autowired
     public InformationRepository informationRepository;
 
-    public InformationService(AccountsService accountsService) {
+    @Autowired
+    public InformationService(AccountsService accountsService, RoadService roadService) {
         this.accountsService = accountsService;
+        this.roadService = roadService;
     }
 
     public void saveInformation(InformationDTO informationDTO){
@@ -25,6 +28,8 @@ public class InformationService {
 
         accountsService.saveAccounts(informationDTO.getHusband(), information, Side.HUSBAND);
         accountsService.saveAccounts(informationDTO.getWife(), information, Side.WIFE);
+
+        roadService.saveRoad(informationDTO, information);
     }
 
     private Information dtoInformationEntity(InformationDTO informationDTO){

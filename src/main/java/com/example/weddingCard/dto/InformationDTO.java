@@ -15,6 +15,7 @@ public class InformationDTO {
     private String welcome;
     private SideDTO husband;
     private SideDTO wife;
+    private RoadDTO road;
 
     public Integer getTemplateId() {
         return templateId;
@@ -70,6 +71,14 @@ public class InformationDTO {
 
     public void setWife(SideDTO wife) {
         this.wife = wife;
+    }
+
+    public RoadDTO getRoad() {
+        return road;
+    }
+
+    public void setRoad(RoadDTO road) {
+        this.road = road;
     }
 }
 
