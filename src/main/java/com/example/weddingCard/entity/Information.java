@@ -2,7 +2,8 @@ package com.example.weddingCard.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 @Entity
 @Table(name = "information")
@@ -12,7 +13,7 @@ public class Information {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "wedding_id")
     private Integer weddingId;
-    private Date date;
+    private LocalDateTime date;
     private String address;
     @Column(name = "wedding_hall")
     private String weddingHall;
@@ -25,7 +26,7 @@ public class Information {
 
     public Integer getWeddingId() { return weddingId; }
 
-    public Date getDate() { return date; }
+    public LocalDateTime getDate() { return date; }
 
     public String getAddress() { return address; }
 
@@ -39,7 +40,7 @@ public class Information {
 
     public void setWeddingId(Integer weddingId) { this.weddingId = weddingId; }
 
-    public void setDate(Date date) { this.date = date; }
+    public void setDate(LocalDateTime date) { this.date = date; }
 
     public void setAddress(String address) { this.address = address; }
 

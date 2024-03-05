@@ -17,12 +17,13 @@ public class Accounts {
     private Information weddingId;
     @Enumerated(EnumType.STRING)
     private Relation relation;
+    private String relationship;
     @Enumerated(EnumType.STRING)
     private Side side;
     private String name;
-    private String english;
     private String bank;
     private String account;
+    private String contact;
 
     public Integer getAccountId() {
         return accountId;
@@ -36,6 +37,10 @@ public class Accounts {
         return relation;
     }
 
+    public String getRelationship() {
+        return relationship;
+    }
+
     public Side getSide() {
         return side;
     }
@@ -44,16 +49,16 @@ public class Accounts {
         return name;
     }
 
-    public String getEnglish() {
-        return english;
-    }
-
     public String getBank() {
         return bank;
     }
 
     public String getAccount() {
         return account;
+    }
+
+    public String getContact() {
+        return contact;
     }
 
     public void setAccountId(Integer accountId) {
@@ -68,16 +73,16 @@ public class Accounts {
         this.relation = relation;
     }
 
+    public void setRelationship(String relationship) {
+        this.relationship = relationship;
+    }
+
     public void setSide(Side side) {
         this.side = side;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setEnglish(String english) {
-        this.english = english;
     }
 
     public void setBank(String bank) {
@@ -88,4 +93,7 @@ public class Accounts {
         this.account = account;
     }
 
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
 }
