@@ -1,9 +1,7 @@
 package com.example.weddingCard.service;
 
 import com.example.weddingCard.dto.InformationDTO;
-import com.example.weddingCard.dto.RoadDTO;
 import com.example.weddingCard.entity.Information;
-import com.example.weddingCard.entity.Road;
 import com.example.weddingCard.enums.Side;
 import com.example.weddingCard.repository.InformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +16,7 @@ public class InformationService {
     @Autowired
     public InformationRepository informationRepository;
 
+    @Autowired
     public InformationService(AccountsService accountsService, RoadService roadService) {
         this.accountsService = accountsService;
         this.roadService = roadService;

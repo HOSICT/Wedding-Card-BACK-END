@@ -1,7 +1,10 @@
 package com.example.weddingCard.controller;
 
 import com.example.weddingCard.dto.SurveyDto;
+import com.example.weddingCard.entity.WecaUser;
 import com.example.weddingCard.service.SurveyService;
+import com.example.weddingCard.service.UserIdSerivce;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,15 +18,18 @@ import java.util.Map;
 public class SurveyController {
 
     private final SurveyService surveyService;
+    private final UserIdSerivce userIdSerivce;
 
     @Autowired
-    public SurveyController(SurveyService surveyService) {
+    public SurveyController(SurveyService surveyService, UserIdSerivce userIdSerivce) {
         this.surveyService = surveyService;
+        this.userIdSerivce = userIdSerivce;
     }
 
     @PostMapping("/survey")
     public ResponseEntity<?> saveSurvey(@RequestBody SurveyDto surveyDTO, @RequestHeader("Uid") String userId) {
-        surveyService.createOrUpdateSurveyAndUser(surveyDTO, userId);
+        WecaUser user = userIdSerivce.saveOrUpdateUserId(userId);
+        surveyService.saveSurvey(surveyDTO, user);
 
         Map<String, Object> response = new HashMap<>();
         response.put("status", HttpStatus.OK.value());
