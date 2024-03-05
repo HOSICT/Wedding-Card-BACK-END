@@ -13,6 +13,8 @@ public class InformationDTO {
     @JsonProperty("wedding_hall")
     private String weddingHall;
     private String welcome;
+    private SideDTO husband;
+    private SideDTO wife;
 
     public Integer getTemplateId() {
         return templateId;
@@ -52,6 +54,22 @@ public class InformationDTO {
 
     public void setWelcome(String welcome) {
         this.welcome = welcome;
+    }
+
+    public SideDTO getHusband() {
+        return husband;
+    }
+
+    public void setHusband(SideDTO husband) {
+        this.husband = husband;
+    }
+
+    public SideDTO getWife() {
+        return wife;
+    }
+
+    public void setWife(SideDTO wife) {
+        this.wife = wife;
     }
 }
 
