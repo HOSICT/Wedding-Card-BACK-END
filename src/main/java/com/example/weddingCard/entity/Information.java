@@ -24,31 +24,60 @@ public class Information {
     @Column(name = "template_id")
     private Integer templateId;
 
-    public Integer getWeddingId() { return weddingId; }
+    public Integer getWeddingId() {
+        return weddingId;
+    }
 
-    public LocalDateTime getDate() { return date; }
+    public void setWeddingId(Integer weddingId) {
+        this.weddingId = weddingId;
+    }
 
-    public String getAddress() { return address; }
+    public LocalDateTime getDate() {
+        return date;
+    }
 
-    public String getWeddingHall() { return weddingHall; }
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
 
-    public String getWelcome() { return welcome; }
+    public String getAddress() {
+        return address;
+    }
 
-    public WecaUser getUser() { return user; }
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-    public Integer getTemplateId() { return templateId; }
+    public String getWeddingHall() {
+        return weddingHall;
+    }
 
-    public void setWeddingId(Integer weddingId) { this.weddingId = weddingId; }
+    public void setWeddingHall(String weddingHall) {
+        this.weddingHall = weddingHall;
+    }
 
-    public void setDate(LocalDateTime date) { this.date = date; }
+    public String getWelcome() {
+        return welcome;
+    }
 
-    public void setAddress(String address) { this.address = address; }
+    public void setWelcome(String welcome) {
+        this.welcome = welcome;
+    }
 
-    public void setWeddingHall(String weddingHall) { this.weddingHall = weddingHall; }
+    public WecaUser getUser() {
+        return user;
+    }
 
-    public void setWelcome(String welcome) { this.welcome = welcome; }
+    public void setUser(WecaUser user) {
+        this.user = user;
+    }
 
-    public void setUser(WecaUser user) { this.user = user; }
+    public Integer getTemplateId() {
+        return templateId;
+    }
 
-    public void setTemplateId(Integer templateId) { this.templateId = templateId; }
+    public void setTemplateId(Integer templateId) {
+        this.templateId = templateId;
+    }
+
 }

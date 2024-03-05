@@ -23,28 +23,28 @@ public class Survey {
         return id;
     }
 
-    public WecaUser getUser() {
-        return user;
-    }
-
-    public Boolean getHasVideo() {
-        return hasVideo;
-    }
-
-    public Boolean getHasLive() {
-        return hasLive;
-    }
-
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public WecaUser getUser() {
+        return user;
     }
 
     public void setUser(WecaUser user) {
         this.user = user;
     }
 
+    public Boolean getHasVideo() {
+        return hasVideo;
+    }
+
     public void setHasVideo(Boolean hasVideo) {
         this.hasVideo = hasVideo;
+    }
+
+    public Boolean getHasLive() {
+        return hasLive;
     }
 
     public void setHasLive(Boolean hasLive) {
