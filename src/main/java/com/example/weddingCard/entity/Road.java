@@ -24,52 +24,52 @@ public class Road {
         return roadId;
     }
 
-    public Information getWeddingId() {
-        return weddingId;
-    }
-
-    public String getSubway() {
-        return subway;
-    }
-
-    public String getBus() {
-        return bus;
-    }
-
-    public String getCar() {
-        return car;
-    }
-
-    public String getRentBus() {
-        return rentBus;
-    }
-
-    public String getEtc() {
-        return etc;
-    }
-
     public void setRoadId(Integer roadId) {
         this.roadId = roadId;
+    }
+
+    public Information getWeddingId() {
+        return weddingId;
     }
 
     public void setWeddingId(Information weddingId) {
         this.weddingId = weddingId;
     }
 
+    public String getSubway() {
+        return subway;
+    }
+
     public void setSubway(String subway) {
         this.subway = subway;
+    }
+
+    public String getBus() {
+        return bus;
     }
 
     public void setBus(String bus) {
         this.bus = bus;
     }
 
+    public String getCar() {
+        return car;
+    }
+
     public void setCar(String car) {
         this.car = car;
     }
 
+    public String getRentBus() {
+        return rentBus;
+    }
+
     public void setRentBus(String rentBus) {
         this.rentBus = rentBus;
+    }
+
+    public String getEtc() {
+        return etc;
     }
 
     public void setEtc(String etc) {

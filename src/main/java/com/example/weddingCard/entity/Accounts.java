@@ -29,68 +29,68 @@ public class Accounts {
         return accountId;
     }
 
-    public Information getWeddingId() {
-        return weddingId;
-    }
-
-    public Relation getRelation() {
-        return relation;
-    }
-
-    public String getRelationship() {
-        return relationship;
-    }
-
-    public Side getSide() {
-        return side;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getBank() {
-        return bank;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public String getContact() {
-        return contact;
-    }
-
     public void setAccountId(Integer accountId) {
         this.accountId = accountId;
+    }
+
+    public Information getWeddingId() {
+        return weddingId;
     }
 
     public void setWeddingId(Information weddingId) {
         this.weddingId = weddingId;
     }
 
+    public Relation getRelation() {
+        return relation;
+    }
+
     public void setRelation(Relation relation) {
         this.relation = relation;
+    }
+
+    public String getRelationship() {
+        return relationship;
     }
 
     public void setRelationship(String relationship) {
         this.relationship = relationship;
     }
 
+    public Side getSide() {
+        return side;
+    }
+
     public void setSide(Side side) {
         this.side = side;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getBank() {
+        return bank;
+    }
+
     public void setBank(String bank) {
         this.bank = bank;
     }
 
+    public String getAccount() {
+        return account;
+    }
+
     public void setAccount(String account) {
         this.account = account;
+    }
+
+    public String getContact() {
+        return contact;
     }
 
     public void setContact(String contact) {
