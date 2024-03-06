@@ -2,10 +2,13 @@ package com.example.weddingCard.service;
 
 import com.example.weddingCard.dto.InformationDTO;
 import com.example.weddingCard.entity.Information;
+import com.example.weddingCard.entity.WecaUser;
 import com.example.weddingCard.enums.Side;
 import com.example.weddingCard.repository.InformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class InformationService {
@@ -22,8 +25,8 @@ public class InformationService {
         this.roadService = roadService;
     }
 
-    public void saveInformation(InformationDTO informationDTO){
-        Information information = dtoInformationEntity(informationDTO);
+    public void saveInformation(InformationDTO informationDTO, WecaUser user){
+        Information information = dtoInformationEntity(informationDTO, user);
         information = informationRepository.save(information);
 
         accountsService.saveAccounts(informationDTO.getHusband(), information, Side.HUSBAND);
@@ -32,8 +35,15 @@ public class InformationService {
         roadService.saveRoad(informationDTO, information);
     }
 
-    private Information dtoInformationEntity(InformationDTO informationDTO){
-        Information information = new Information();
+    private Information dtoInformationEntity(InformationDTO informationDTO, WecaUser user){
+        List<Information> findUserInformation = informationRepository.findByUser(user);
+        Information information;
+        if (findUserInformation.isEmpty()) {
+            information = new Information();
+        } else {
+            information = findUserInformation.get(0);
+        }
+        information.setUser(user);
         information.setTemplateId(informationDTO.getTemplateId());
         information.setDate(informationDTO.getDate());
         information.setAddress(informationDTO.getAddress());
