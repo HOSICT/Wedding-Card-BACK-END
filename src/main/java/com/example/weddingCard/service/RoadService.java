@@ -8,6 +8,8 @@ import com.example.weddingCard.repository.RoadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RoadService {
 
@@ -19,7 +21,13 @@ public class RoadService {
     }
 
     private Road dtoRoadEntity(RoadDTO roadDTO, Information information) {
-        Road road = new Road();
+        List<Road> findWeddingIdRoad = roadRepository.findByWeddingId(information);
+        Road road;
+        if (findWeddingIdRoad.isEmpty()) {
+            road = new Road();
+        } else {
+            road = findWeddingIdRoad.get(0);
+        }
         road.setWeddingId(information);
         road.setSubway(roadDTO.getSubway());
         road.setBus(roadDTO.getBus());

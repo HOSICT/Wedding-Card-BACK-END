@@ -13,7 +13,9 @@ public class InformationDTO {
     @JsonProperty("wedding_hall")
     private String weddingHall;
     private String welcome;
+    @JsonProperty("HUSBAND")
     private SideDTO husband;
+    @JsonProperty("WIFE")
     private SideDTO wife;
     private RoadDTO road;
 
