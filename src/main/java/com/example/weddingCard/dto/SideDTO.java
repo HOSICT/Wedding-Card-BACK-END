@@ -1,9 +1,14 @@
 package com.example.weddingCard.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class SideDTO {
 
+    @JsonProperty("ME")
     private AccountsDTO me;
+    @JsonProperty("FATHER")
     private AccountsDTO father;
+    @JsonProperty("MOTHER")
     private AccountsDTO mother;
     private String relationship;
 

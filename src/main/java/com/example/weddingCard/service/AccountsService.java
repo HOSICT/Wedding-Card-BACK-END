@@ -10,6 +10,8 @@ import com.example.weddingCard.repository.AccountsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AccountsService {
 
@@ -30,7 +32,15 @@ public class AccountsService {
     }
 
     private Accounts dtoAccountsEntity(AccountsDTO accountsDTO, Information information, Relation relation, Side side, String relationship) {
-        Accounts accounts = new Accounts();
+        Optional<Accounts> findByWeddingRelationSideAccounts = accountsRepository.findByWeddingIdAndRelationAndSide(information, relation, side);
+        Accounts accounts;
+        if (findByWeddingRelationSideAccounts.isEmpty()) {
+            accounts = new Accounts();
+        } else {
+            accounts = findByWeddingRelationSideAccounts.get();
+//            accounts.setRelation(convertUpperCase(accounts.getRelation()));
+//            accounts.setSide(convertUpperCase(accounts.getSide()));
+        }
         accounts.setWeddingId(information);
         accounts.setSide(side);
         accounts.setRelation(relation);
@@ -40,5 +50,10 @@ public class AccountsService {
         accounts.setAccount(accountsDTO.getAccount());
         accounts.setContact(accountsDTO.getContact());
         return accounts;
+    }
+
+    private <E extends Enum<E>> E convertUpperCase(E enumValue) {
+        String upperName = enumValue.name().toUpperCase();
+        return Enum.valueOf(enumValue.getDeclaringClass(), upperName);
     }
 }
