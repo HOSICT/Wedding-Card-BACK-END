@@ -18,6 +18,7 @@ public class InformationDTO {
     @JsonProperty("WIFE")
     private SideDTO wife;
     private RoadDTO road;
+    private ManagementDTO management;
 
     public Integer getTemplateId() {
         return templateId;
@@ -81,6 +82,14 @@ public class InformationDTO {
 
     public void setRoad(RoadDTO road) {
         this.road = road;
+    }
+
+    public ManagementDTO getManagement() {
+        return management;
+    }
+
+    public void setManagement(ManagementDTO management) {
+        this.management = management;
     }
 }
 
