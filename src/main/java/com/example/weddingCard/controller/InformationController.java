@@ -1,8 +1,8 @@
 package com.example.weddingCard.controller;
 
-import com.example.weddingCard.dto.EtcDTO;
 import com.example.weddingCard.dto.InformationDTO;
 import com.example.weddingCard.entity.WecaUser;
+import com.example.weddingCard.response.WecaResponse;
 import com.example.weddingCard.service.EtcService;
 import com.example.weddingCard.service.InformationService;
 import com.example.weddingCard.service.S3Service;
@@ -21,21 +21,21 @@ public class InformationController {
     private final S3Service s3Service;
     private final InformationService informationService;
     private final UserIdService userIdService;
-    private final EtcService etcService;
 
     public InformationController(ObjectMapper objectMapper, S3Service s3Service, InformationService informationService, UserIdService userIdService, EtcService etcService) {
         this.objectMapper = objectMapper;
         this.s3Service = s3Service;
         this.informationService = informationService;
         this.userIdService = userIdService;
-        this.etcService = etcService;
     }
 
     @PostMapping("/save/information")
-    public ResponseEntity<String> uploadFile(@RequestParam("images") MultipartFile[] files, @RequestParam("json") String jsonRequest, @RequestHeader("Uid") String userId) {
+    public ResponseEntity<WecaResponse> uploadFile(@RequestParam("images") MultipartFile[] files, @RequestParam("json") String jsonRequest, @RequestHeader("Uid") String userId) {
+        WecaResponse response;
         WecaUser user = userIdService.saveOrUpdateUserId(userId);
         if (files.length > 15) {
-            return ResponseEntity.badRequest().body("Error: Cannot upload more than 15 files at a time.");
+            response = new WecaResponse(400, "Error: Cannot upload more than 15 files at a time.");
+            return ResponseEntity.badRequest().body(response);
         }
         for (MultipartFile file : files) {
             try {
@@ -43,11 +43,12 @@ public class InformationController {
                 InformationDTO informationDTO = objectMapper.readValue(jsonRequest, InformationDTO.class);
                 informationService.saveInformation(informationDTO, user);
             } catch (IOException e) {
-                return ResponseEntity.internalServerError().body("File upload failed: " + e.getMessage());
+                response = new WecaResponse(500, "File upload failed" + e.getMessage());
+                return ResponseEntity.internalServerError().body(response);
             }
         }
 
-
-        return ResponseEntity.ok("Files uploaded successfully");
+        response = new WecaResponse(200, "ok");
+        return ResponseEntity.ok(response);
     }
 }

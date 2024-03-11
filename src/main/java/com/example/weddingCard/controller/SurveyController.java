@@ -2,38 +2,33 @@ package com.example.weddingCard.controller;
 
 import com.example.weddingCard.dto.SurveyDto;
 import com.example.weddingCard.entity.WecaUser;
+import com.example.weddingCard.response.WecaResponse;
 import com.example.weddingCard.service.SurveyService;
 import com.example.weddingCard.service.UserIdService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/save")
 public class SurveyController {
 
     private final SurveyService surveyService;
-    private final UserIdService userIdSerivce;
+    private final UserIdService userIdService;
 
     @Autowired
-    public SurveyController(SurveyService surveyService, UserIdService userIdSerivce) {
+    public SurveyController(SurveyService surveyService, UserIdService userIdSerivce, UserIdService userIdService) {
         this.surveyService = surveyService;
-        this.userIdSerivce = userIdSerivce;
+        this.userIdService = userIdService;
     }
 
     @PostMapping("/survey")
-    public ResponseEntity<?> saveSurvey(@RequestBody SurveyDto surveyDTO, @RequestHeader("Uid") String userId) {
-        WecaUser user = userIdSerivce.saveOrUpdateUserId(userId);
+    public ResponseEntity<WecaResponse> saveSurvey(@RequestBody SurveyDto surveyDTO, @RequestHeader("Uid") String userId) {
+        WecaResponse response;
+        WecaUser user = userIdService.saveOrUpdateUserId(userId);
         surveyService.saveSurvey(surveyDTO, user);
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", HttpStatus.OK.value());
-        response.put("msg", "ok");
-
+        response = new WecaResponse(200, "ok");
         return ResponseEntity.ok(response);
     }
 }
