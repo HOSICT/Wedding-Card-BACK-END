@@ -38,8 +38,6 @@ public class AccountsService {
             accounts = new Accounts();
         } else {
             accounts = findByWeddingRelationSideAccounts.get();
-//            accounts.setRelation(convertUpperCase(accounts.getRelation()));
-//            accounts.setSide(convertUpperCase(accounts.getSide()));
         }
         accounts.setWeddingId(information);
         accounts.setSide(side);
@@ -50,10 +48,5 @@ public class AccountsService {
         accounts.setAccount(accountsDTO.getAccount());
         accounts.setContact(accountsDTO.getContact());
         return accounts;
-    }
-
-    private <E extends Enum<E>> E convertUpperCase(E enumValue) {
-        String upperName = enumValue.name().toUpperCase();
-        return Enum.valueOf(enumValue.getDeclaringClass(), upperName);
     }
 }

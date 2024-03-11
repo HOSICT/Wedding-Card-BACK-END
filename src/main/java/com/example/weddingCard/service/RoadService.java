@@ -13,11 +13,19 @@ import java.util.List;
 @Service
 public class RoadService {
 
+    private final EtcService etcService;
+
     @Autowired
     private RoadRepository roadRepository;
+
+    public RoadService(EtcService etcService) {
+        this.etcService = etcService;
+    }
+
     public void saveRoad(InformationDTO informationDTO, Information information) {
         Road road = dtoRoadEntity(informationDTO.getRoad(), information);
         roadRepository.save(road);
+        etcService.saveEtc(informationDTO.getRoad(), road);
     }
 
     private Road dtoRoadEntity(RoadDTO roadDTO, Information information) {
