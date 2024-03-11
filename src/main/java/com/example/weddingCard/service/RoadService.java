@@ -32,8 +32,6 @@ public class RoadService {
         road.setSubway(roadDTO.getSubway());
         road.setBus(roadDTO.getBus());
         road.setCar(roadDTO.getCar());
-        road.setRentBus(roadDTO.getRentBus() != null ? roadDTO.getRentBus() : "");
-        road.setEtc(roadDTO.getEtc() != null ? roadDTO.getEtc() : "");
         return road;
     }
 }
