@@ -42,10 +42,12 @@ public class InformationController {
         try {
             InformationDTO informationDTO = objectMapper.readValue(jsonRequest, InformationDTO.class);
             Information information = informationService.saveInformation(informationDTO, user);
-            for (MultipartFile file : files) {
-                s3Service.uploadFile(file);
-                s3Service.saveImagesUrl(files, information);
+
+            String[] arrayMultipartFile = new String[files.length];
+            for (int i = 0; i < files.length; i++) {
+                arrayMultipartFile[i] = s3Service.uploadFile(files[i]);
             }
+            s3Service.saveImagesUrl(arrayMultipartFile, information);
         } catch (IOException e) {
             response = new WecaResponse(500, "File upload failed" + e.getMessage());
             return ResponseEntity.internalServerError().body(response);
