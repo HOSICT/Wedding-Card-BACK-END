@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class EtcDTO {
 
-    @JsonProperty("transport_tpye")
+    @JsonProperty("transport_type")
     private String transportType;
 
     private String info;

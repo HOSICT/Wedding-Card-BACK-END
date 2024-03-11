@@ -5,6 +5,7 @@ public class RoadDTO {
     private String subway;
     private String bus;
     private String car;
+    private EtcDTO etc;
 
     public String getSubway() {
         return subway;
@@ -30,4 +31,11 @@ public class RoadDTO {
         this.car = car;
     }
 
+    public EtcDTO getEtc() {
+        return etc;
+    }
+
+    public void setEtc(EtcDTO etc) {
+        this.etc = etc;
+    }
 }

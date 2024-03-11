@@ -1,5 +1,6 @@
 package com.example.weddingCard.entity;
 
+import com.example.weddingCard.dto.EtcDTO;
 import jakarta.persistence.*;
 
 @Entity

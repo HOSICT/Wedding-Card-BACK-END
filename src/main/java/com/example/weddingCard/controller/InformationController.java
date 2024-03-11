@@ -1,7 +1,9 @@
 package com.example.weddingCard.controller;
 
+import com.example.weddingCard.dto.EtcDTO;
 import com.example.weddingCard.dto.InformationDTO;
 import com.example.weddingCard.entity.WecaUser;
+import com.example.weddingCard.service.EtcService;
 import com.example.weddingCard.service.InformationService;
 import com.example.weddingCard.service.S3Service;
 import com.example.weddingCard.service.UserIdService;
@@ -19,12 +21,14 @@ public class InformationController {
     private final S3Service s3Service;
     private final InformationService informationService;
     private final UserIdService userIdService;
+    private final EtcService etcService;
 
-    public InformationController(ObjectMapper objectMapper, S3Service s3Service, InformationService informationService, UserIdService userIdService) {
+    public InformationController(ObjectMapper objectMapper, S3Service s3Service, InformationService informationService, UserIdService userIdService, EtcService etcService) {
         this.objectMapper = objectMapper;
         this.s3Service = s3Service;
         this.informationService = informationService;
         this.userIdService = userIdService;
+        this.etcService = etcService;
     }
 
     @PostMapping("/save/information")
