@@ -16,9 +16,6 @@ public class Road {
     private String subway;
     private String bus;
     private String car;
-    @Column(name = "rent_bus")
-    private String rentBus;
-    private String etc;
 
     public Integer getRoadId() {
         return roadId;
@@ -60,19 +57,4 @@ public class Road {
         this.car = car;
     }
 
-    public String getRentBus() {
-        return rentBus;
-    }
-
-    public void setRentBus(String rentBus) {
-        this.rentBus = rentBus;
-    }
-
-    public String getEtc() {
-        return etc;
-    }
-
-    public void setEtc(String etc) {
-        this.etc = etc;
-    }
 }
