@@ -13,9 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class S3Service {
@@ -31,7 +32,7 @@ public class S3Service {
 
     public String uploadFile(MultipartFile multipartFile) throws IOException {
         File file = multiPartFileToFile(multipartFile);
-        String fileName = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
+        String fileName = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename().replace("+", "_");
         amazonS3.putObject(new PutObjectRequest(bucketName, fileName, file));
         String imagesS3Url = amazonS3.getUrl(bucketName, fileName).toString();
         file.delete();
@@ -39,25 +40,26 @@ public class S3Service {
         return imagesS3Url;
     }
 
-    public List<ImagesUrl> saveImagesUrl(MultipartFile[] arrayMultipartFile, Information information) throws IOException {
-        List<ImagesUrl> saveImagesUrlArray = new ArrayList<>();
+    public List<ImagesUrl> saveImagesUrl(String[] arrayMultipartFile, Information information) throws IOException {
 
         List<ImagesUrl> findWeddingIdImagesUrl = imagesUrlRepository.findByWeddingId(information);
         if (!findWeddingIdImagesUrl.isEmpty()) {
             for (ImagesUrl url : findWeddingIdImagesUrl) {
                 imagesUrlRepository.delete(url);
+                deleteFile(url);
             }
         }
-        for (MultipartFile multipartFile : arrayMultipartFile) {
+
+        List<ImagesUrl> saveImagesUrlArray = new ArrayList<>();
+
+        for (String imagesS3Url : arrayMultipartFile) {
 
             ImagesUrl imagesUrl = new ImagesUrl();
 
-            String imagesS3Url = uploadFile(multipartFile);
-
             imagesUrl.setWeddingId(information);
             imagesUrl.setUrl(imagesS3Url);
-            imagesUrlRepository.save(imagesUrl);
 
+            imagesUrlRepository.save(imagesUrl);
             saveImagesUrlArray.add(imagesUrl);
         }
         return saveImagesUrlArray;
@@ -69,5 +71,19 @@ public class S3Service {
             fileOutputStream.write(file.getBytes());
         }
         return convertedFile;
+    }
+
+    private void deleteFile(ImagesUrl url) {
+        String urlGetString = url.getUrl();
+        String decodeUrl;
+        try{
+            decodeUrl = URLDecoder.decode(urlGetString, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            decodeUrl = urlGetString;
+            e.printStackTrace();
+        }
+        String fileUrl = decodeUrl.substring(decodeUrl.lastIndexOf("/") + 1);
+
+        amazonS3.deleteObject(bucketName, fileUrl);
     }
 }
