@@ -27,7 +27,7 @@ public class InformationService {
         this.managementService = managementService;
     }
 
-    public void saveInformation(InformationDTO informationDTO, WecaUser user){
+    public Information saveInformation(InformationDTO informationDTO, WecaUser user){
         Information information = dtoInformationEntity(informationDTO, user);
         information = informationRepository.save(information);
 
@@ -36,6 +36,8 @@ public class InformationService {
 
         roadService.saveRoad(informationDTO, information);
         managementService.saveManagement(informationDTO, information);
+
+        return information;
     }
 
     private Information dtoInformationEntity(InformationDTO informationDTO, WecaUser user){

@@ -1,6 +1,8 @@
 package com.example.weddingCard.controller;
 
 import com.example.weddingCard.dto.InformationDTO;
+import com.example.weddingCard.entity.ImagesUrl;
+import com.example.weddingCard.entity.Information;
 import com.example.weddingCard.entity.WecaUser;
 import com.example.weddingCard.response.WecaResponse;
 import com.example.weddingCard.service.EtcService;
@@ -37,15 +39,16 @@ public class InformationController {
             response = new WecaResponse(400, "Error: Cannot upload more than 15 files at a time.");
             return ResponseEntity.badRequest().body(response);
         }
-        for (MultipartFile file : files) {
-            try {
+        try {
+            InformationDTO informationDTO = objectMapper.readValue(jsonRequest, InformationDTO.class);
+            Information information = informationService.saveInformation(informationDTO, user);
+            for (MultipartFile file : files) {
                 s3Service.uploadFile(file);
-                InformationDTO informationDTO = objectMapper.readValue(jsonRequest, InformationDTO.class);
-                informationService.saveInformation(informationDTO, user);
-            } catch (IOException e) {
-                response = new WecaResponse(500, "File upload failed" + e.getMessage());
-                return ResponseEntity.internalServerError().body(response);
+                s3Service.saveImagesUrl(files, information);
             }
+        } catch (IOException e) {
+            response = new WecaResponse(500, "File upload failed" + e.getMessage());
+            return ResponseEntity.internalServerError().body(response);
         }
 
         response = new WecaResponse(200, "ok");

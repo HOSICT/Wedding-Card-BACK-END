@@ -17,7 +17,7 @@ public class SurveyController {
     private final UserIdService userIdService;
 
     @Autowired
-    public SurveyController(SurveyService surveyService, UserIdService userIdSerivce, UserIdService userIdService) {
+    public SurveyController(SurveyService surveyService, UserIdService userIdService) {
         this.surveyService = surveyService;
         this.userIdService = userIdService;
     }
