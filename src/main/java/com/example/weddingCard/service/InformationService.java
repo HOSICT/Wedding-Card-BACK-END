@@ -15,14 +15,16 @@ public class InformationService {
 
     private final AccountsService accountsService;
     private final RoadService roadService;
+    private final ManagementService managementService;
 
     @Autowired
     public InformationRepository informationRepository;
 
     @Autowired
-    public InformationService(AccountsService accountsService, RoadService roadService) {
+    public InformationService(AccountsService accountsService, RoadService roadService, ManagementService managementService) {
         this.accountsService = accountsService;
         this.roadService = roadService;
+        this.managementService = managementService;
     }
 
     public void saveInformation(InformationDTO informationDTO, WecaUser user){
@@ -33,6 +35,7 @@ public class InformationService {
         accountsService.saveAccounts(informationDTO.getWife(), information, Side.WIFE);
 
         roadService.saveRoad(informationDTO, information);
+        managementService.saveManagement(informationDTO, information);
     }
 
     private Information dtoInformationEntity(InformationDTO informationDTO, WecaUser user){
