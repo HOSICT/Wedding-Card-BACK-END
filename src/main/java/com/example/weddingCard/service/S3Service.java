@@ -8,6 +8,7 @@ import com.example.weddingCard.repository.ImagesUrlRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -30,9 +31,10 @@ public class S3Service {
     @Value("${cloud.aws.s3.bucketName}")
     private String bucketName;
 
+    @Transactional
     public String uploadFile(MultipartFile multipartFile) throws IOException {
         File file = multiPartFileToFile(multipartFile);
-        String fileName = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename().replace("+", "_");
+        String fileName = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
         amazonS3.putObject(new PutObjectRequest(bucketName, fileName, file));
         String imagesS3Url = amazonS3.getUrl(bucketName, fileName).toString();
         file.delete();
@@ -40,6 +42,7 @@ public class S3Service {
         return imagesS3Url;
     }
 
+    @Transactional
     public List<ImagesUrl> saveImagesUrl(String[] arrayMultipartFile, Information information) throws IOException {
 
         List<ImagesUrl> findWeddingIdImagesUrl = imagesUrlRepository.findByWeddingId(information);

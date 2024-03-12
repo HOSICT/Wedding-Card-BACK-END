@@ -2,9 +2,9 @@ package com.example.weddingCard.service;
 
 import com.example.weddingCard.entity.WecaUser;
 import com.example.weddingCard.repository.WecaUserRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserIdService {
