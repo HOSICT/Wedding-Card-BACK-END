@@ -7,6 +7,7 @@ import com.example.weddingCard.enums.Side;
 import com.example.weddingCard.repository.InformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class InformationService {
         this.managementService = managementService;
     }
 
+    @Transactional
     public Information saveInformation(InformationDTO informationDTO, WecaUser user){
         Information information = dtoInformationEntity(informationDTO, user);
         information = informationRepository.save(information);
