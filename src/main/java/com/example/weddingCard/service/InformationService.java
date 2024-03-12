@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -50,12 +52,22 @@ public class InformationService {
         } else {
             information = findUserInformation.get(0);
         }
+
         information.setUser(user);
         information.setTemplateId(informationDTO.getTemplateId());
-        information.setDate(informationDTO.getDate());
+        information.setDate(adjustDate(informationDTO.getDate()));
         information.setAddress(informationDTO.getAddress());
         information.setWeddingHall(informationDTO.getWeddingHall());
         information.setWelcome(informationDTO.getWelcome());
         return information;
+    }
+
+    private LocalDateTime adjustDate(LocalDateTime localDateTime) {
+        String getDateToString = localDateTime.toString();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(getDateToString, formatter);
+        LocalDateTime adjustedDate = dateTime.withSecond(0).withNano(0);
+
+        return adjustedDate;
     }
 }
