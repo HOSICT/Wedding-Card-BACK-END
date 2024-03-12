@@ -32,14 +32,17 @@ public class S3Service {
     private String bucketName;
 
     @Transactional
-    public String uploadFile(MultipartFile multipartFile) throws IOException {
-        File file = multiPartFileToFile(multipartFile);
-        String fileName = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
-        amazonS3.putObject(new PutObjectRequest(bucketName, fileName, file));
-        String imagesS3Url = amazonS3.getUrl(bucketName, fileName).toString();
-        file.delete();
+    public String uploadFile(MultipartFile multipartFile, String prefix) throws IOException {
+        if (multipartFile != null) {
+            File file = multiPartFileToFile(multipartFile);
+            String fileName = prefix + "_" + System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
+            amazonS3.putObject(new PutObjectRequest(bucketName, fileName, file));
+            String imagesS3Url = amazonS3.getUrl(bucketName, fileName).toString();
+            file.delete();
+            return imagesS3Url;
+        }
 
-        return imagesS3Url;
+        return null;
     }
 
     @Transactional
