@@ -31,7 +31,6 @@ public class ManagementService {
         }
         management.setWeddingId(information);
         management.setManagementPassword(managementDTO.getManagementPassword());
-        management.setBgm(managementDTO.getBgm());
         return management;
     }
 }

@@ -7,8 +7,6 @@ public class ManagementDTO {
     @JsonProperty("management_password")
     private String managementPassword;
 
-    private Integer bgm;
-
     public String getManagementPassword() {
         return managementPassword;
     }
@@ -17,11 +15,4 @@ public class ManagementDTO {
         this.managementPassword = managementPassword;
     }
 
-    public Integer getBgm() {
-        return bgm;
-    }
-
-    public void setBgm(Integer bgm) {
-        this.bgm = bgm;
-    }
 }
