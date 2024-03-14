@@ -15,7 +15,6 @@ public class Management {
     private Information weddingId;
     @Column(name = "management_password")
     private String managementPassword;
-    private Integer bgm;
 
     public Integer getManagementId() {
         return managementId;
@@ -41,11 +40,4 @@ public class Management {
         this.managementPassword = managementPassword;
     }
 
-    public Integer getBgm() {
-        return bgm;
-    }
-
-    public void setBgm(Integer bgm) {
-        this.bgm = bgm;
-    }
 }

@@ -54,7 +54,6 @@ public class InformationService {
         }
 
         information.setUser(user);
-        information.setTemplateId(informationDTO.getTemplateId());
         information.setDate(adjustDate(informationDTO.getDate()));
         information.setAddress(informationDTO.getAddress());
         information.setWeddingHall(informationDTO.getWeddingHall());
