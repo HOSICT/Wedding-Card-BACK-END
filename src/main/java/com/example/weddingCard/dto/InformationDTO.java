@@ -19,6 +19,8 @@ public class InformationDTO {
     private SideDTO wife;
     private RoadDTO road;
     private ManagementDTO management;
+    private ContentsDTO contents;
+    private SharingDTO sharing;
 
     public Integer getTemplateId() {
         return templateId;
@@ -90,6 +92,22 @@ public class InformationDTO {
 
     public void setManagement(ManagementDTO management) {
         this.management = management;
+    }
+
+    public ContentsDTO getContents() {
+        return contents;
+    }
+
+    public void setContents(ContentsDTO contents) {
+        this.contents = contents;
+    }
+
+    public SharingDTO getSharing() {
+        return sharing;
+    }
+
+    public void setSharing(SharingDTO sharing) {
+        this.sharing = sharing;
     }
 }
 
