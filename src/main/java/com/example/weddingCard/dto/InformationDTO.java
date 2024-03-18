@@ -20,7 +20,8 @@ public class InformationDTO {
     private RoadDTO road;
     private ManagementDTO management;
     private ContentsDTO contents;
-    private SharingDTO sharing;
+    @JsonProperty("open_graph")
+    private OpenGraphDTO openGraph;
 
     public Integer getTemplateId() {
         return templateId;
@@ -102,12 +103,12 @@ public class InformationDTO {
         this.contents = contents;
     }
 
-    public SharingDTO getSharing() {
-        return sharing;
+    public OpenGraphDTO getOpenGraph() {
+        return openGraph;
     }
 
-    public void setSharing(SharingDTO sharing) {
-        this.sharing = sharing;
+    public void setOpenGraph(OpenGraphDTO openGraph) {
+        this.openGraph = openGraph;
     }
 }
 

@@ -3,26 +3,25 @@ package com.example.weddingCard.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "sharing")
-public class Sharing {
+@Table(name = "open_graph")
+public class OpenGraph {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "sharing_id")
-    private Integer sharingId;
+    @Column(name = "open_graph_id")
+    private Integer openGraphId;
     @ManyToOne
     @JoinColumn(name = "wedding_id")
     private Information weddingId;
-    private Integer url;
     private String title;
     private String subtitle;
 
-    public Integer getSharingId() {
-        return sharingId;
+    public Integer getOpenGraphId() {
+        return openGraphId;
     }
 
-    public void setSharingId(Integer sharingId) {
-        this.sharingId = sharingId;
+    public void setOpenGraphId(Integer openGraphId) {
+        this.openGraphId = openGraphId;
     }
 
     public Information getWeddingId() {
@@ -31,14 +30,6 @@ public class Sharing {
 
     public void setWeddingId(Information weddingId) {
         this.weddingId = weddingId;
-    }
-
-    public Integer getUrl() {
-        return url;
-    }
-
-    public void setUrl(Integer url) {
-        this.url = url;
     }
 
     public String getSubtitle() {
