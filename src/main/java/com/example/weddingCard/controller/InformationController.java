@@ -51,6 +51,8 @@ public class InformationController {
                                                    @RequestParam(value = "images12", required = false) MultipartFile images12,
                                                    @RequestParam(value = "images13", required = false) MultipartFile images13,
                                                    @RequestParam(value = "images14", required = false) MultipartFile images14,
+                                                   @RequestParam(value = "images15", required = false) MultipartFile images15,
+                                                   @RequestParam(value = "thumbnail") MultipartFile thumbnail,
                                                    @RequestParam("json") String jsonRequest,
                                                    @RequestHeader("Uid") String userId) {
         WecaResponse response;
@@ -58,11 +60,12 @@ public class InformationController {
         List<MultipartFile> files = new ArrayList<>();
 
         files.add(mainImage);
-        files.addAll(Arrays.asList(images1, images2, images3, images4, images5, images6, images7, images8, images9, images10, images11, images12, images13, images14));
+        files.add(thumbnail);
+        files.addAll(Arrays.asList(images1, images2, images3, images4, images5, images6, images7, images8, images9, images10, images11, images12, images13, images14, images15));
 
         files = files.stream().filter(Objects::nonNull).collect(Collectors.toList());
 
-        if (files.size() > 15) {
+        if (files.size() > 16) {
             response = new WecaResponse(400, "Error: Cannot upload more than 15 files at a time.");
             return ResponseEntity.badRequest().body(response);
         }
@@ -72,7 +75,15 @@ public class InformationController {
 
             String[] arrayMultipartFile = new String[files.size()];
             for (int i = 0; i < files.size(); i++) {
-                String prefix = (i == 0) ? "mainImage" : "Images" + i;
+                String prefix;
+                if (i == 0) {
+                    prefix = "mainImage";
+                } else if (i == 1) {
+                    prefix = "thumbnail";
+                } else {
+                    prefix = "Images" + (i -1);
+                }
+//                String prefix = (i == 0) ? "mainImage" : "Images" + i;
                 arrayMultipartFile[i] = s3Service.uploadFile(files.get(i), prefix);
             }
             s3Service.saveImagesUrl(arrayMultipartFile, information);

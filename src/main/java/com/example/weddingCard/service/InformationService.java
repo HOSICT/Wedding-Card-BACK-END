@@ -19,15 +19,19 @@ public class InformationService {
     private final AccountsService accountsService;
     private final RoadService roadService;
     private final ManagementService managementService;
+    private final ContentsService contentsService;
+    private final SharingService sharingService;
 
     @Autowired
     public InformationRepository informationRepository;
 
     @Autowired
-    public InformationService(AccountsService accountsService, RoadService roadService, ManagementService managementService) {
+    public InformationService(AccountsService accountsService, RoadService roadService, ManagementService managementService, ContentsService contentsService, SharingService sharingService) {
         this.accountsService = accountsService;
         this.roadService = roadService;
         this.managementService = managementService;
+        this.contentsService = contentsService;
+        this.sharingService = sharingService;
     }
 
     @Transactional
@@ -40,6 +44,8 @@ public class InformationService {
 
         roadService.saveRoad(informationDTO, information);
         managementService.saveManagement(informationDTO, information);
+        contentsService.saveContents(informationDTO, information);
+        sharingService.saveSharing(informationDTO, information);
 
         return information;
     }
