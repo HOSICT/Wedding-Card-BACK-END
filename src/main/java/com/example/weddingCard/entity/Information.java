@@ -14,13 +14,11 @@ public class Information {
     @Column(name = "wedding_id")
     private Integer weddingId;
     private LocalDateTime date;
-    private String address;
-    @Column(name = "wedding_hall")
-    private String weddingHall;
-    private String welcome;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private WecaUser user;
+    @JoinColumn(name = "welcome_align")
+    private String welcomeAlign;
     @Column(name = "template_id")
     private Integer templateId;
 
@@ -40,36 +38,20 @@ public class Information {
         this.date = date;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getWeddingHall() {
-        return weddingHall;
-    }
-
-    public void setWeddingHall(String weddingHall) {
-        this.weddingHall = weddingHall;
-    }
-
-    public String getWelcome() {
-        return welcome;
-    }
-
-    public void setWelcome(String welcome) {
-        this.welcome = welcome;
-    }
-
     public WecaUser getUser() {
         return user;
     }
 
     public void setUser(WecaUser user) {
         this.user = user;
+    }
+
+    public String getWelcomeAlign() {
+        return welcomeAlign;
+    }
+
+    public void setWelcomeAlign(String welcomeAlign) {
+        this.welcomeAlign = welcomeAlign;
     }
 
     public Integer getTemplateId() {
@@ -79,5 +61,6 @@ public class Information {
     public void setTemplateId(Integer templateId) {
         this.templateId = templateId;
     }
+
 
 }

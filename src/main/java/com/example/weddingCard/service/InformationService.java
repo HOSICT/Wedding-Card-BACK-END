@@ -21,17 +21,19 @@ public class InformationService {
     private final ManagementService managementService;
     private final ContentsService contentsService;
     private final OpenGraphService openGraphService;
+    private final LocationService locationService;
 
     @Autowired
     public InformationRepository informationRepository;
 
     @Autowired
-    public InformationService(AccountsService accountsService, RoadService roadService, ManagementService managementService, ContentsService contentsService, OpenGraphService openGraphService) {
+    public InformationService(AccountsService accountsService, RoadService roadService, ManagementService managementService, ContentsService contentsService, OpenGraphService openGraphService, LocationService locationService) {
         this.accountsService = accountsService;
         this.roadService = roadService;
         this.managementService = managementService;
         this.contentsService = contentsService;
         this.openGraphService = openGraphService;
+        this.locationService = locationService;
     }
 
     @Transactional
@@ -39,9 +41,9 @@ public class InformationService {
         Information information = dtoInformationEntity(informationDTO, user);
         information = informationRepository.save(information);
 
+        locationService.saveLocation(informationDTO, information);
         accountsService.saveAccounts(informationDTO.getHusband(), information, Side.HUSBAND);
         accountsService.saveAccounts(informationDTO.getWife(), information, Side.WIFE);
-
         roadService.saveRoad(informationDTO, information);
         managementService.saveManagement(informationDTO, information);
         contentsService.saveContents(informationDTO, information);
@@ -61,9 +63,7 @@ public class InformationService {
 
         information.setUser(user);
         information.setDate(adjustDate(informationDTO.getDate()));
-        information.setAddress(informationDTO.getAddress());
-        information.setWeddingHall(informationDTO.getWeddingHall());
-        information.setWelcome(informationDTO.getWelcome());
+        information.setWelcomeAlign(informationDTO.getWelcomeAlign());
         return information;
     }
 
