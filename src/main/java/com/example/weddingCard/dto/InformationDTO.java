@@ -9,14 +9,13 @@ public class InformationDTO {
     @JsonProperty("template_id")
     private Integer templateId;
     private LocalDateTime date;
-    private String address;
-    @JsonProperty("wedding_hall")
-    private String weddingHall;
-    private String welcome;
+    @JsonProperty("welcome_align")
+    private String welcomeAlign;
     @JsonProperty("HUSBAND")
     private SideDTO husband;
     @JsonProperty("WIFE")
     private SideDTO wife;
+    private LocationDTO location;
     private RoadDTO road;
     private ManagementDTO management;
     private ContentsDTO contents;
@@ -39,28 +38,12 @@ public class InformationDTO {
         this.date = date;
     }
 
-    public String getAddress() {
-        return address;
+    public String getWelcomeAlign() {
+        return welcomeAlign;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getWeddingHall() {
-        return weddingHall;
-    }
-
-    public void setWeddingHall(String weddingHall) {
-        this.weddingHall = weddingHall;
-    }
-
-    public String getWelcome() {
-        return welcome;
-    }
-
-    public void setWelcome(String welcome) {
-        this.welcome = welcome;
+    public void setWelcomeAlign(String welcomeAlign) {
+        this.welcomeAlign = welcomeAlign;
     }
 
     public SideDTO getHusband() {
@@ -77,6 +60,14 @@ public class InformationDTO {
 
     public void setWife(SideDTO wife) {
         this.wife = wife;
+    }
+
+    public LocationDTO getLocation() {
+        return location;
+    }
+
+    public void setLocation(LocationDTO location) {
+        this.location = location;
     }
 
     public RoadDTO getRoad() {

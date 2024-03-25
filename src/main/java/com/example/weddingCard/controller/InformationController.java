@@ -1,13 +1,15 @@
 package com.example.weddingCard.controller;
 
 import com.example.weddingCard.dto.InformationDTO;
+import com.example.weddingCard.dto.WelcomeDTO;
 import com.example.weddingCard.entity.Information;
 import com.example.weddingCard.entity.WecaUser;
 import com.example.weddingCard.response.WecaResponse;
-import com.example.weddingCard.service.EtcService;
 import com.example.weddingCard.service.InformationService;
 import com.example.weddingCard.service.S3Service;
 import com.example.weddingCard.service.UserIdService;
+import com.example.weddingCard.service.WelcomeService;
+import com.example.weddingCard.util.ParsingEditorState;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,16 +29,20 @@ public class InformationController {
     private final S3Service s3Service;
     private final InformationService informationService;
     private final UserIdService userIdService;
+    private final WelcomeService welcomeService;
+    private final ParsingEditorState parsingEditorState;
 
-    public InformationController(ObjectMapper objectMapper, S3Service s3Service, InformationService informationService, UserIdService userIdService, EtcService etcService) {
+    public InformationController(ObjectMapper objectMapper, S3Service s3Service, InformationService informationService, UserIdService userIdService, WelcomeService welcomeService, ParsingEditorState parsingEditorState) {
         this.objectMapper = objectMapper;
         this.s3Service = s3Service;
         this.informationService = informationService;
         this.userIdService = userIdService;
+        this.welcomeService = welcomeService;
+        this.parsingEditorState = parsingEditorState;
     }
 
     @PostMapping("/save/information")
-    public ResponseEntity<WecaResponse> uploadFile(@RequestParam("mainImage") MultipartFile mainImage,
+    public ResponseEntity<WecaResponse> uploadInformation(@RequestParam("mainImage") MultipartFile mainImage,
                                                    @RequestParam(value = "images1", required = false) MultipartFile images1,
                                                    @RequestParam(value = "images2", required = false) MultipartFile images2,
                                                    @RequestParam(value = "images3", required = false) MultipartFile images3,
@@ -73,6 +79,11 @@ public class InformationController {
             InformationDTO informationDTO = objectMapper.readValue(jsonRequest, InformationDTO.class);
             Information information = informationService.saveInformation(informationDTO, user);
 
+            WelcomeDTO welcomeDTO = new WelcomeDTO();
+            welcomeDTO.setWelcomeMessage(parsingEditorState.parsingEditorStateToString(jsonRequest, "welcome"));
+            welcomeService.saveWelcome(welcomeDTO, information);
+
+
             String[] arrayMultipartFile = new String[files.size()];
             for (int i = 0; i < files.size(); i++) {
                 String prefix;
@@ -88,7 +99,7 @@ public class InformationController {
             }
             s3Service.saveImagesUrl(arrayMultipartFile, information);
         } catch (IOException e) {
-            response = new WecaResponse(500, "File upload failed" + e.getMessage());
+            response = new WecaResponse(500, "File upload failed: " + e.getMessage());
             return ResponseEntity.internalServerError().body(response);
         }
 
