@@ -1,12 +1,12 @@
 package com.example.weddingCard.repository;
 
-import com.example.weddingCard.entity.Etc;
 import com.example.weddingCard.entity.Information;
+import com.example.weddingCard.entity.Subway;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface EtcRepository extends JpaRepository<Etc, Integer> {
+public interface SubwayRepository extends JpaRepository<Subway, Integer> {
 
-    List<Etc> findByWeddingId(Information information);
+    List<Subway> findByWeddingId(Information information);
 }

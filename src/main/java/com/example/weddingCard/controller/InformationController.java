@@ -1,15 +1,12 @@
 package com.example.weddingCard.controller;
 
-import com.example.weddingCard.dto.InformationDTO;
-import com.example.weddingCard.dto.WelcomeDTO;
+import com.example.weddingCard.dto.*;
 import com.example.weddingCard.entity.Information;
 import com.example.weddingCard.entity.WecaUser;
 import com.example.weddingCard.response.WecaResponse;
-import com.example.weddingCard.service.InformationService;
-import com.example.weddingCard.service.S3Service;
-import com.example.weddingCard.service.UserIdService;
-import com.example.weddingCard.service.WelcomeService;
+import com.example.weddingCard.service.*;
 import com.example.weddingCard.util.ParsingEditorState;
+import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,14 +27,22 @@ public class InformationController {
     private final InformationService informationService;
     private final UserIdService userIdService;
     private final WelcomeService welcomeService;
+    private final SubwayService subwayService;
+    private final BusService busService;
+    private final CarService carService;
+    private final EtcService etcService;
     private final ParsingEditorState parsingEditorState;
 
-    public InformationController(ObjectMapper objectMapper, S3Service s3Service, InformationService informationService, UserIdService userIdService, WelcomeService welcomeService, ParsingEditorState parsingEditorState) {
+    public InformationController(ObjectMapper objectMapper, S3Service s3Service, InformationService informationService, UserIdService userIdService, WelcomeService welcomeService, SubwayService subwayService, BusService busService, CarService carService, EtcService etcService, ParsingEditorState parsingEditorState) {
         this.objectMapper = objectMapper;
         this.s3Service = s3Service;
         this.informationService = informationService;
         this.userIdService = userIdService;
         this.welcomeService = welcomeService;
+        this.subwayService = subwayService;
+        this.busService = busService;
+        this.carService = carService;
+        this.etcService = etcService;
         this.parsingEditorState = parsingEditorState;
     }
 
@@ -82,6 +87,23 @@ public class InformationController {
             WelcomeDTO welcomeDTO = new WelcomeDTO();
             welcomeDTO.setWelcomeMessage(parsingEditorState.parsingEditorStateToString(jsonRequest, "welcome"));
             welcomeService.saveWelcome(welcomeDTO, information);
+
+            SubwayDTO subwayDTO = new SubwayDTO();
+            subwayDTO.setSubwayMessage(parsingEditorState.parsingEditorStateToString(jsonRequest, "subway"));
+            subwayService.saveSubway(subwayDTO, information);
+
+            BusDTO busDTO = new BusDTO();
+            busDTO.setBusMessage(parsingEditorState.parsingEditorStateToString(jsonRequest, "bus"));
+            busService.saveBus(busDTO, information);
+
+            CarDTO carDTO = new CarDTO();
+            carDTO.setCarMessage(parsingEditorState.parsingEditorStateToString(jsonRequest, "car"));
+            carService.saveCar(carDTO, information);
+
+            EtcDTO etcDTO = new EtcDTO();
+            etcDTO.setTransportType(parsingEditorState.parsingInsideJsonObject(jsonRequest, "etc", "transport_type"));
+            etcDTO.setInfo(parsingEditorState.parsingInsideEditorStateToString(jsonRequest, "etc", "info"));
+            etcService.saveEtc(etcDTO, information);
 
 
             String[] arrayMultipartFile = new String[files.size()];

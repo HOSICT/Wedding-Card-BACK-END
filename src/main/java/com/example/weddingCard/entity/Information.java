@@ -17,7 +17,7 @@ public class Information {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private WecaUser user;
-    @JoinColumn(name = "welcome_align")
+    @Column(name = "welcome_align")
     private String welcomeAlign;
     @Column(name = "template_id")
     private Integer templateId;
