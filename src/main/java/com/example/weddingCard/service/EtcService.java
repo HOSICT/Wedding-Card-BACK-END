@@ -6,6 +6,7 @@ import com.example.weddingCard.entity.Information;
 import com.example.weddingCard.repository.EtcRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class EtcService {
     @Autowired
     private EtcRepository etcRepository;
 
+    @Transactional
     public void saveEtc(EtcDTO etcDTO, Information information) {
         Etc etc = dtoEtcEntity(etcDTO, information);
         etcRepository.save(etc);

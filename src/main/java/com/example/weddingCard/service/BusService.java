@@ -6,6 +6,7 @@ import com.example.weddingCard.entity.Information;
 import com.example.weddingCard.repository.BusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class BusService {
     @Autowired
     private BusRepository busRepository;
 
+    @Transactional
     public void saveBus(BusDTO busDTO, Information information) {
         Bus bus = dtoBusEntity(busDTO, information);
         busRepository.save(bus);

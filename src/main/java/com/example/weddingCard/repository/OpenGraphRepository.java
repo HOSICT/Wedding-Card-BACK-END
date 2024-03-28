@@ -7,6 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface OpenGraphRepository extends JpaRepository<OpenGraph, Integer> {
-
     List<OpenGraph> findByWeddingId(Information information);
 }

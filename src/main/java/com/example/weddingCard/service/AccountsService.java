@@ -9,6 +9,7 @@ import com.example.weddingCard.enums.Side;
 import com.example.weddingCard.repository.AccountsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -18,6 +19,7 @@ public class AccountsService {
     @Autowired
     private AccountsRepository accountsRepository;
 
+    @Transactional
     public void saveAccounts(SideDTO sideDTO, Information information, Side side) {
         String relationship = sideDTO.getRelationship();
         if(sideDTO.getMe() != null) {

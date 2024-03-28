@@ -6,7 +6,6 @@ import com.example.weddingCard.entity.WecaUser;
 import com.example.weddingCard.response.WecaResponse;
 import com.example.weddingCard.service.*;
 import com.example.weddingCard.util.ParsingEditorState;
-import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +21,6 @@ import java.util.stream.Collectors;
 public class InformationController {
 
     private final ObjectMapper objectMapper;
-
     private final S3Service s3Service;
     private final InformationService informationService;
     private final UserIdService userIdService;
@@ -116,7 +114,6 @@ public class InformationController {
                 } else {
                     prefix = "Images" + (i -1);
                 }
-//                String prefix = (i == 0) ? "mainImage" : "Images" + i;
                 arrayMultipartFile[i] = s3Service.uploadFile(files.get(i), prefix);
             }
             s3Service.saveImagesUrl(arrayMultipartFile, information);

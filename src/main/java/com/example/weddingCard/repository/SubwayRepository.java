@@ -7,6 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface SubwayRepository extends JpaRepository<Subway, Integer> {
-
     List<Subway> findByWeddingId(Information information);
 }

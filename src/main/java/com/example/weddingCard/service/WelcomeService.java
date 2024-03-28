@@ -7,6 +7,7 @@ import com.example.weddingCard.repository.WelcomeRepository;
 import com.fasterxml.jackson.core.JsonParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class WelcomeService {
     @Autowired
     private WelcomeRepository welcomeRepository;
 
+    @Transactional
     public void saveWelcome(WelcomeDTO welcomeDTO, Information information) {
         Welcome welcome = dtoWelcomeEntity(welcomeDTO, information);
         welcomeRepository.save(welcome);
