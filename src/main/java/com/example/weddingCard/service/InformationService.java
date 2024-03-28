@@ -17,7 +17,6 @@ import java.util.List;
 public class InformationService {
 
     private final AccountsService accountsService;
-    private final RoadService roadService;
     private final ManagementService managementService;
     private final ContentsService contentsService;
     private final OpenGraphService openGraphService;
@@ -27,9 +26,8 @@ public class InformationService {
     public InformationRepository informationRepository;
 
     @Autowired
-    public InformationService(AccountsService accountsService, RoadService roadService, ManagementService managementService, ContentsService contentsService, OpenGraphService openGraphService, LocationService locationService) {
+    public InformationService(AccountsService accountsService, ManagementService managementService, ContentsService contentsService, OpenGraphService openGraphService, LocationService locationService) {
         this.accountsService = accountsService;
-        this.roadService = roadService;
         this.managementService = managementService;
         this.contentsService = contentsService;
         this.openGraphService = openGraphService;
@@ -44,7 +42,6 @@ public class InformationService {
         locationService.saveLocation(informationDTO, information);
         accountsService.saveAccounts(informationDTO.getHusband(), information, Side.HUSBAND);
         accountsService.saveAccounts(informationDTO.getWife(), information, Side.WIFE);
-        roadService.saveRoad(informationDTO, information);
         managementService.saveManagement(informationDTO, information);
         contentsService.saveContents(informationDTO, information);
         openGraphService.saveOpenGraph(informationDTO, information);

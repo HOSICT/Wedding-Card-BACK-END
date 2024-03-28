@@ -14,4 +14,20 @@ public class ParsingEditorState {
         return jsonArray.toString();
     }
 
+    public String parsingInsideEditorStateToString(String jsonRequest, String key1, String key2) {
+        JSONObject jsonObject = new JSONObject(jsonRequest);
+        JSONObject insideJsonObject = jsonObject.getJSONObject(key1);
+        JSONArray jsonArray = insideJsonObject.getJSONArray(key2);
+
+        return jsonArray.toString();
+    }
+
+    public String parsingInsideJsonObject(String jsonRequest, String key1, String key2) {
+        JSONObject jsonObject = new JSONObject(jsonRequest);
+        JSONObject coverJsonObject = jsonObject.getJSONObject(key1);
+        String insideJsonObject = coverJsonObject.getString(key2);
+
+        return insideJsonObject;
+    }
+
 }

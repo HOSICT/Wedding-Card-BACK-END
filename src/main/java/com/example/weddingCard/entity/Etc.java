@@ -11,12 +11,11 @@ public class Etc {
     @Column(name = "etc_id")
     private Integer etcId;
     @ManyToOne
-    @JoinColumn(name = "road_id")
-    private Road roadId;
-
+    @JoinColumn(name = "wedding_id")
+    private Information weddingId;
     @Column(name = "transport_type")
     private String transportType;
-
+    @Column(columnDefinition = "TEXT")
     private String info;
 
     public Integer getEtcId() {
@@ -27,12 +26,12 @@ public class Etc {
         this.etcId = etcId;
     }
 
-    public Road getRoadId() {
-        return roadId;
+    public Information getWeddingId() {
+        return weddingId;
     }
 
-    public void setRoadId(Road roadId) {
-        this.roadId = roadId;
+    public void setWeddingId(Information weddingId) {
+        this.weddingId = weddingId;
     }
 
     public String getTransportType() {

@@ -16,7 +16,6 @@ public class InformationDTO {
     @JsonProperty("WIFE")
     private SideDTO wife;
     private LocationDTO location;
-    private RoadDTO road;
     private ManagementDTO management;
     private ContentsDTO contents;
     @JsonProperty("open_graph")
@@ -68,14 +67,6 @@ public class InformationDTO {
 
     public void setLocation(LocationDTO location) {
         this.location = location;
-    }
-
-    public RoadDTO getRoad() {
-        return road;
-    }
-
-    public void setRoad(RoadDTO road) {
-        this.road = road;
     }
 
     public ManagementDTO getManagement() {
