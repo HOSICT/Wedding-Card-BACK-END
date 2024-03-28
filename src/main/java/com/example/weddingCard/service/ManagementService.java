@@ -7,6 +7,7 @@ import com.example.weddingCard.entity.Management;
 import com.example.weddingCard.repository.ManagementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class ManagementService {
     @Autowired
     private ManagementRepository managementRepository;
 
+    @Transactional
     public void saveManagement(InformationDTO informationDTO, Information information) {
         Management management = dtoManagementEntity(informationDTO.getManagement(), information);
         managementRepository.save(management);

@@ -7,6 +7,7 @@ import com.example.weddingCard.entity.OpenGraph;
 import com.example.weddingCard.repository.OpenGraphRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class OpenGraphService {
     @Autowired
     private OpenGraphRepository openGraphRepository;
 
+    @Transactional
     public void saveOpenGraph(InformationDTO informationDTO, Information information) {
         OpenGraph openGraph = dtoOpenGraphEntity(informationDTO.getOpenGraph(), information);
         openGraphRepository.save(openGraph);

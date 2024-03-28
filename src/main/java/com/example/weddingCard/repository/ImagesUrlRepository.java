@@ -7,6 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ImagesUrlRepository extends JpaRepository<ImagesUrl, Integer> {
-
     List<ImagesUrl> findByWeddingId(Information information);
 }

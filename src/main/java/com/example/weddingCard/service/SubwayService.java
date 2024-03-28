@@ -6,6 +6,7 @@ import com.example.weddingCard.entity.Subway;
 import com.example.weddingCard.repository.SubwayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class SubwayService {
     @Autowired
     private SubwayRepository subwayRepository;
 
+    @Transactional
     public void saveSubway(SubwayDTO subwayDTO, Information information) {
         Subway subway = dtoSubwayEntity(subwayDTO, information);
         subwayRepository.save(subway);

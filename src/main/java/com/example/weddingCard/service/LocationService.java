@@ -7,6 +7,7 @@ import com.example.weddingCard.entity.Location;
 import com.example.weddingCard.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class LocationService {
     @Autowired
     public LocationRepository locationRepository;
 
+    @Transactional
     public void saveLocation (InformationDTO informationDTO, Information information) {
         Location location = dtoLocationEntity(informationDTO.getLocation(), information);
         locationRepository.save(location);

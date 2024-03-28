@@ -7,6 +7,7 @@ import com.example.weddingCard.entity.Information;
 import com.example.weddingCard.repository.ContentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class ContentsService {
     @Autowired
     private ContentsRepository contentsRepository;
 
+    @Transactional
     public void saveContents(InformationDTO informationDTO, Information information) {
         Contents contents = dtoContentsEntity(informationDTO.getContents(), information);
         contentsRepository.save(contents);
