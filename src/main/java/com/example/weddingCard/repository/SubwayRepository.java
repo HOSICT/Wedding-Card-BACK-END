@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface SubwayRepository extends JpaRepository<Subway, Integer> {
     List<Subway> findByWeddingId(Information information);
+    List<Subway> findByWeddingIdIn(List<Information> information);
 }

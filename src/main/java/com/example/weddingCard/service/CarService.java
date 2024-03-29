@@ -36,4 +36,8 @@ public class CarService {
 
         return car;
     }
+
+    public List<Car> findCarByWeddingId(List<Information> information) {
+        return carRepository.findByWeddingIdIn(information);
+    }
 }

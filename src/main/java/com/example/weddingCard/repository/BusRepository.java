@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface BusRepository extends JpaRepository<Bus, Integer> {
     List<Bus> findByWeddingId(Information information);
+    List<Bus> findByWeddingIdIn(List<Information> information);
 }

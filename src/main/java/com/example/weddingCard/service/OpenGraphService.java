@@ -36,4 +36,8 @@ public class OpenGraphService {
         openGraph.setSubtitle(openGraphDTO.getSubtitle());
         return openGraph;
     }
+
+    public List<OpenGraph> findOpenGraphByWeddingId(List<Information> information) {
+        return openGraphRepository.findByWeddingIdIn(information);
+    }
 }

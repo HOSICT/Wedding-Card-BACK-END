@@ -35,4 +35,8 @@ public class ManagementService {
         management.setManagementPassword(managementDTO.getManagementPassword());
         return management;
     }
+
+    public List<Management> findManagementByWeddingId(List<Information> information) {
+        return managementRepository.findByWeddingIdIn(information);
+    }
 }

@@ -32,6 +32,10 @@ public class Subway {
         this.weddingId = weddingId;
     }
 
+    public String getSubwayMessage() {
+        return subwayMessage;
+    }
+
     public void setSubwayMessage(String subwayMessage) {
         this.subwayMessage = subwayMessage;
     }

@@ -37,4 +37,8 @@ public class EtcService {
 
         return etc;
     }
+
+    public List<Etc> findEtcByWeddingId(List<Information> information) {
+        return etcRepository.findByWeddingIdIn(information);
+    }
 }

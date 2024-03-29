@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ManagementRepository extends JpaRepository<Management, Integer> {
     List<Management> findByWeddingId(Information information);
+    List<Management> findByWeddingIdIn(List<Information> information);
 }

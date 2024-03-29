@@ -36,4 +36,8 @@ public class SubwayService {
 
         return subway;
     }
+
+    public List<Subway> findSubwayByWeddingId(List<Information> information) {
+        return subwayRepository.findByWeddingIdIn(information);
+    }
 }
