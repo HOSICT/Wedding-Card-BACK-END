@@ -49,10 +49,12 @@ public class InformationService {
         return information;
     }
 
+    public List<Information> findInformationByUserId(WecaUser wecaUser) {
+        return informationRepository.findByUser(wecaUser);
+    }
 
-
-    private Information dtoInformationEntity(InformationDTO informationDTO, WecaUser user){
-        List<Information> findUserInformation = informationRepository.findByUser(user);
+    private Information dtoInformationEntity(InformationDTO informationDTO, WecaUser wecaUser){
+        List<Information> findUserInformation = informationRepository.findByUser(wecaUser);
         Information information;
         if (findUserInformation.isEmpty()) {
             information = new Information();
@@ -60,7 +62,7 @@ public class InformationService {
             information = findUserInformation.get(0);
         }
 
-        information.setUser(user);
+        information.setUser(wecaUser);
         information.setDate(adjustDate(informationDTO.getDate()));
         information.setWelcomeAlign(informationDTO.getWelcomeAlign());
         return information;
