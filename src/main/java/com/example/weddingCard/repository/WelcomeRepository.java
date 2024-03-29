@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface WelcomeRepository extends JpaRepository<Welcome, Integer> {
-    List<Welcome> findAllByWeddingId(Information information);
+    List<Welcome> findByWeddingId(Information information);
+    List<Welcome> findByWeddingIdIn(List<Information> information);
 }

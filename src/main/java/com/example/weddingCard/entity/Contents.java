@@ -14,6 +14,7 @@ public class Contents {
     @JoinColumn(name = "wedding_id")
     private Information weddingId;
     private Integer bgm;
+    private Integer effect;
     @Column(name = "video_id")
     private String videoId;
     @Column(name = "live_url")
@@ -41,6 +42,14 @@ public class Contents {
 
     public void setBgm(Integer bgm) {
         this.bgm = bgm;
+    }
+
+    public Integer getEffect() {
+        return effect;
+    }
+
+    public void setEffect(Integer effect) {
+        this.effect = effect;
     }
 
     public String getVideoId() {

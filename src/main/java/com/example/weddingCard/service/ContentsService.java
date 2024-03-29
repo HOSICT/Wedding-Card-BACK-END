@@ -33,8 +33,13 @@ public class ContentsService {
         }
         contents.setWeddingId(information);
         contents.setBgm(contentsDTO.getBgm());
+        contents.setEffect(contentsDTO.getEffect());
         contents.setVideoId(contentsDTO.getVideoId());
         contents.setLiveUrl(contentsDTO.getLiveUrl());
         return contents;
+    }
+
+    public List<Contents> findContentsByWeddingId(List<Information> information) {
+        return contentsRepository.findByWeddingIdIn(information);
     }
 }

@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ContentsRepository extends JpaRepository<Contents,Integer> {
     List<Contents> findByWeddingId(Information information);
+    List<Contents> findByWeddingIdIn(List<Information> information);
 }

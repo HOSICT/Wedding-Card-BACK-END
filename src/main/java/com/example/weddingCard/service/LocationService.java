@@ -39,4 +39,8 @@ public class LocationService {
 
         return location;
     }
+
+    public List<Location> findLocationByWeddingId(List<Information> information) {
+        return locationRepository.findByWeddingIdIn(information);
+    }
 }

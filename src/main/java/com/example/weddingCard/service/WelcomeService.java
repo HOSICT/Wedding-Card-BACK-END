@@ -24,7 +24,7 @@ public class WelcomeService {
     }
 
     private Welcome dtoWelcomeEntity(WelcomeDTO welcomeDTO, Information information) {
-        List<Welcome> findWeddingIdWelcome = welcomeRepository.findAllByWeddingId(information);
+        List<Welcome> findWeddingIdWelcome = welcomeRepository.findByWeddingId(information);
         Welcome welcome;
         if (findWeddingIdWelcome.isEmpty()) {
             welcome = new Welcome();
@@ -36,5 +36,9 @@ public class WelcomeService {
         welcome.setWelcomeMessage(welcomeDTO.getWelcomeMessage());
 
         return welcome;
+    }
+
+    public List<Welcome> findWelcomeByWeddingId(List<Information> information) {
+        return welcomeRepository.findByWeddingIdIn(information);
     }
 }
