@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface CarRepository extends JpaRepository<Car, Integer> {
     List<Car> findByWeddingId(Information information);
+    List<Car> findByWeddingIdIn(List<Information> information);
 }

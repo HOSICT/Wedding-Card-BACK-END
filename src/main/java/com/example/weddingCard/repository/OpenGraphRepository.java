@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface OpenGraphRepository extends JpaRepository<OpenGraph, Integer> {
     List<OpenGraph> findByWeddingId(Information information);
+    List<OpenGraph> findByWeddingIdIn(List<Information> information);
 }

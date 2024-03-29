@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface EtcRepository extends JpaRepository<Etc, Integer> {
     List<Etc> findByWeddingId(Information information);
+    List<Etc> findByWeddingIdIn(List<Information> information);
 }

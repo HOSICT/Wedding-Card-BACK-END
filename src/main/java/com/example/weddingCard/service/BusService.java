@@ -36,4 +36,8 @@ public class BusService {
 
         return bus;
     }
+
+    public List<Bus> findBusByWeddingId(List<Information> information) {
+        return busRepository.findByWeddingIdIn(information);
+    }
 }
