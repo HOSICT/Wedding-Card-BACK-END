@@ -158,15 +158,16 @@ public class InquiryController {
         String thumbnailImageUrl = null;
         List<String> slidesImagesUrl = new ArrayList<>();
 
-        for (String url : imagesUrlList.stream().map(ImagesUrl::getUrl).toList()) {
+        for (ImagesUrl imagesUrl : imagesUrlList) {
+            String url = imagesUrl.getUrl();
             String fileName = url.substring(url.lastIndexOf('/') + 1);
 
             if (fileName.startsWith("mainImage")) {
-                mainImageUrl = url;
+                mainImageUrl = fileName;
             } else if (fileName.startsWith("thumbnail")) {
-                thumbnailImageUrl = url;
+                thumbnailImageUrl = fileName;
             } else if (fileName.startsWith("Images")) {
-                slidesImagesUrl.add(url);
+                slidesImagesUrl.add(fileName);
             }
         }
 
