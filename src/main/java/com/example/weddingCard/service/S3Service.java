@@ -92,4 +92,9 @@ public class S3Service {
 
         amazonS3.deleteObject(bucketName, fileUrl);
     }
+
+    public List<ImagesUrl> findImagesUrlByWeddingId(List<Information> information) {
+        return imagesUrlRepository.findByWeddingIdIn(information);
+    }
+
 }

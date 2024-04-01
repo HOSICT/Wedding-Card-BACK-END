@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ImagesUrlRepository extends JpaRepository<ImagesUrl, Integer> {
     List<ImagesUrl> findByWeddingId(Information information);
+    List<ImagesUrl> findByWeddingIdIn(List<Information> information);
 }
