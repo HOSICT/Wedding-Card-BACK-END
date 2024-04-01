@@ -74,7 +74,7 @@ public class InquiryController {
         Object carJson = processCarMessage(carList);
         Object etcJson = processInfoMessage(etcList);
         Map<String, Object> openGraphJson = processOpenGraph(openGraphList);
-        List<String> imagesJson = processImagesUrl(imagesUrlList);
+        Map<String, Object> imagesJson = processImagesUrl(imagesUrlList);
 
         Map<String, Object> responseBody = informationJson.isEmpty() ? new HashMap<>() : informationJson.get(0);
         responseBody.put("location", locationJson);
@@ -153,14 +153,27 @@ public class InquiryController {
         return openGraphJson;
     }
 
-    private List<String> processImagesUrl(List<ImagesUrl> imagesUrlList) {
-        List<String> imagesJson = imagesUrlList.stream()
-                .map(ImagesUrl::getUrl)
-                .map(url -> {
-                    int lastIndex = url.lastIndexOf('/');
-                    return lastIndex != -1 ? url.substring(lastIndex + 1) : url;
-                })
-                .toList();
+    private Map<String, Object> processImagesUrl(List<ImagesUrl> imagesUrlList) {
+        String mainImageUrl = null;
+        String thumbnailImageUrl = null;
+        List<String> slidesImagesUrl = new ArrayList<>();
+
+        for (String url : imagesUrlList.stream().map(ImagesUrl::getUrl).toList()) {
+            String fileName = url.substring(url.lastIndexOf('/') + 1);
+
+            if (fileName.startsWith("mainImage")) {
+                mainImageUrl = url;
+            } else if (fileName.startsWith("thumbnail")) {
+                thumbnailImageUrl = url;
+            } else if (fileName.startsWith("Images")) {
+                slidesImagesUrl.add(url);
+            }
+        }
+
+        Map<String, Object> imagesJson = new HashMap<>();
+        if (mainImageUrl != null) imagesJson.put("main", mainImageUrl);
+        if (!slidesImagesUrl.isEmpty()) imagesJson.put("slides", slidesImagesUrl);
+        if (thumbnailImageUrl != null) imagesJson.put("thumbnail", thumbnailImageUrl);
 
         return imagesJson;
     }
