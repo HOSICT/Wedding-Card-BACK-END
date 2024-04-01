@@ -19,7 +19,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
-public class InformationController {
+public class tempController {
 
     private final ObjectMapper objectMapper;
     private final S3Service s3Service;
@@ -32,7 +32,7 @@ public class InformationController {
     private final EtcService etcService;
     private final ParsingEditorState parsingEditorState;
 
-    public InformationController(ObjectMapper objectMapper, S3Service s3Service, InformationService informationService, UserIdService userIdService, WelcomeService welcomeService, SubwayService subwayService, BusService busService, CarService carService, EtcService etcService, ParsingEditorState parsingEditorState) {
+    public tempController(ObjectMapper objectMapper, S3Service s3Service, InformationService informationService, UserIdService userIdService, WelcomeService welcomeService, SubwayService subwayService, BusService busService, CarService carService, EtcService etcService, ParsingEditorState parsingEditorState) {
         this.objectMapper = objectMapper;
         this.s3Service = s3Service;
         this.informationService = informationService;
@@ -45,26 +45,26 @@ public class InformationController {
         this.parsingEditorState = parsingEditorState;
     }
 
-    @PostMapping("/save/information")
-    public ResponseEntity<WecaResponse> uploadInformation(@RequestParam("mainImage") MultipartFile mainImage,
-                                                   @RequestParam(value = "images1", required = false) MultipartFile images1,
-                                                   @RequestParam(value = "images2", required = false) MultipartFile images2,
-                                                   @RequestParam(value = "images3", required = false) MultipartFile images3,
-                                                   @RequestParam(value = "images4", required = false) MultipartFile images4,
-                                                   @RequestParam(value = "images5", required = false) MultipartFile images5,
-                                                   @RequestParam(value = "images6", required = false) MultipartFile images6,
-                                                   @RequestParam(value = "images7", required = false) MultipartFile images7,
-                                                   @RequestParam(value = "images8", required = false) MultipartFile images8,
-                                                   @RequestParam(value = "images9", required = false) MultipartFile images9,
-                                                   @RequestParam(value = "images10", required = false) MultipartFile images10,
-                                                   @RequestParam(value = "images11", required = false) MultipartFile images11,
-                                                   @RequestParam(value = "images12", required = false) MultipartFile images12,
-                                                   @RequestParam(value = "images13", required = false) MultipartFile images13,
-                                                   @RequestParam(value = "images14", required = false) MultipartFile images14,
-                                                   @RequestParam(value = "images15", required = false) MultipartFile images15,
-                                                   @RequestParam(value = "thumbnail") MultipartFile thumbnail,
-                                                   @RequestParam("json") String jsonRequest,
-                                                   @RequestHeader("Uid") String userId) {
+    @PostMapping("/save/temp")
+    public ResponseEntity<WecaResponse> uploadTemp(@RequestParam("mainImage") MultipartFile mainImage,
+                                                          @RequestParam(value = "images1", required = false) MultipartFile images1,
+                                                          @RequestParam(value = "images2", required = false) MultipartFile images2,
+                                                          @RequestParam(value = "images3", required = false) MultipartFile images3,
+                                                          @RequestParam(value = "images4", required = false) MultipartFile images4,
+                                                          @RequestParam(value = "images5", required = false) MultipartFile images5,
+                                                          @RequestParam(value = "images6", required = false) MultipartFile images6,
+                                                          @RequestParam(value = "images7", required = false) MultipartFile images7,
+                                                          @RequestParam(value = "images8", required = false) MultipartFile images8,
+                                                          @RequestParam(value = "images9", required = false) MultipartFile images9,
+                                                          @RequestParam(value = "images10", required = false) MultipartFile images10,
+                                                          @RequestParam(value = "images11", required = false) MultipartFile images11,
+                                                          @RequestParam(value = "images12", required = false) MultipartFile images12,
+                                                          @RequestParam(value = "images13", required = false) MultipartFile images13,
+                                                          @RequestParam(value = "images14", required = false) MultipartFile images14,
+                                                          @RequestParam(value = "images15", required = false) MultipartFile images15,
+                                                          @RequestParam(value = "thumbnail") MultipartFile thumbnail,
+                                                          @RequestParam("json") String jsonRequest,
+                                                          @RequestHeader("Uid") String userId) {
         WecaResponse response;
         WecaUser user = userIdService.saveOrUpdateUserId(userId);
         List<MultipartFile> files = new ArrayList<>();
@@ -80,29 +80,30 @@ public class InformationController {
             return ResponseEntity.badRequest().body(response);
         }
         try {
-            String jsonRequestToDto = new String(jsonRequest.getBytes(), StandardCharsets.UTF_8);
-            InformationDTO informationDTO = objectMapper.readValue(jsonRequestToDto, InformationDTO.class);
+            InformationDTO informationDTO = objectMapper.readValue(jsonRequest, InformationDTO.class);
             Information information = informationService.saveInformation(informationDTO, user);
 
+            System.out.println(jsonRequest);
+
             WelcomeDTO welcomeDTO = new WelcomeDTO();
-            welcomeDTO.setWelcomeMessage(parsingEditorState.parsingEditorStateToString(jsonRequestToDto, "welcome"));
+            welcomeDTO.setWelcomeMessage(parsingEditorState.parsingEditorStateToString(jsonRequest, "welcome"));
             welcomeService.saveWelcome(welcomeDTO, information);
 
             SubwayDTO subwayDTO = new SubwayDTO();
-            subwayDTO.setSubwayMessage(parsingEditorState.parsingEditorStateToString(jsonRequestToDto, "subway"));
+            subwayDTO.setSubwayMessage(parsingEditorState.parsingEditorStateToString(jsonRequest, "subway"));
             subwayService.saveSubway(subwayDTO, information);
 
             BusDTO busDTO = new BusDTO();
-            busDTO.setBusMessage(parsingEditorState.parsingEditorStateToString(jsonRequestToDto, "bus"));
+            busDTO.setBusMessage(parsingEditorState.parsingEditorStateToString(jsonRequest, "bus"));
             busService.saveBus(busDTO, information);
 
             CarDTO carDTO = new CarDTO();
-            carDTO.setCarMessage(parsingEditorState.parsingEditorStateToString(jsonRequestToDto, "car"));
+            carDTO.setCarMessage(parsingEditorState.parsingEditorStateToString(jsonRequest, "car"));
             carService.saveCar(carDTO, information);
 
             EtcDTO etcDTO = new EtcDTO();
-            etcDTO.setTransportType(parsingEditorState.parsingInsideJsonObject(jsonRequestToDto, "etc", "transport_type"));
-            etcDTO.setInfo(parsingEditorState.parsingInsideEditorStateToString(jsonRequestToDto, "etc", "info"));
+            etcDTO.setTransportType(parsingEditorState.parsingInsideJsonObject(jsonRequest, "etc", "transport_type"));
+            etcDTO.setInfo(parsingEditorState.parsingInsideEditorStateToString(jsonRequest, "etc", "info"));
             etcService.saveEtc(etcDTO, information);
 
 
