@@ -81,7 +81,7 @@ public class InquiryController {
         responseBody.put("welcome", welcomeJson);
         responseBody.put("contents", contentsJson);
         responseBody.put("management", managementJson);
-        responseBody.put("accounts", accountsJson);
+        responseBody.putAll(accountsJson);
         responseBody.put("subway", subwayJson);
         responseBody.put("bus", busJson);
         responseBody.put("car", carJson);
@@ -97,6 +97,7 @@ public class InquiryController {
             Map<String, Object> informationMap = new HashMap<>();
             informationMap.put("date", information.getDate());
             informationMap.put("welcome_align", information.getWelcomeAlign());
+            informationMap.put("template_id", information.getTemplateId());
             return informationMap;
         }).collect(Collectors.toList());
     }
@@ -240,7 +241,6 @@ public class InquiryController {
     }
 
     private Map<String, Object> processAccounts(List<Accounts> accountsList) {
-        Map<String, Object> accountsJson = new HashMap<>();
         Map<String, Object> husband = new HashMap<>();
         Map<String, Object> wife = new HashMap<>();
 
@@ -279,6 +279,7 @@ public class InquiryController {
             wife.put("relationship", wifeRelationship);
         }
 
+        Map<String, Object> accountsJson = new HashMap<>();
         accountsJson.put("HUSBAND", husband);
         accountsJson.put("WIFE", wife);
 
