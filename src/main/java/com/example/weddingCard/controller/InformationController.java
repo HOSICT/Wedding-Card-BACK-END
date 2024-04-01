@@ -82,6 +82,8 @@ public class InformationController {
             InformationDTO informationDTO = objectMapper.readValue(jsonRequest, InformationDTO.class);
             Information information = informationService.saveInformation(informationDTO, user);
 
+            System.out.println(jsonRequest);
+
             WelcomeDTO welcomeDTO = new WelcomeDTO();
             welcomeDTO.setWelcomeMessage(parsingEditorState.parsingEditorStateToString(jsonRequest, "welcome"));
             welcomeService.saveWelcome(welcomeDTO, information);
