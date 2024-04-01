@@ -30,8 +30,9 @@ public class InquiryController {
     private final CarService carService;
     private final EtcService etcService;
     private final OpenGraphService openGraphService;
+    private final S3Service s3Service;
 
-    public InquiryController(InformationService informationService, LocationService locationService, WelcomeService welcomeService, ContentsService contentsService, ManagementService managementService, AccountsService accountsService, SubwayService subwayService, BusService busService, CarService carService, EtcService etcService, OpenGraphService openGraphService) {
+    public InquiryController(InformationService informationService, LocationService locationService, WelcomeService welcomeService, ContentsService contentsService, ManagementService managementService, AccountsService accountsService, SubwayService subwayService, BusService busService, CarService carService, EtcService etcService, OpenGraphService openGraphService, S3Service s3Service) {
         this.informationService = informationService;
         this.locationService = locationService;
         this.welcomeService = welcomeService;
@@ -43,6 +44,7 @@ public class InquiryController {
         this.carService = carService;
         this.etcService = etcService;
         this.openGraphService = openGraphService;
+        this.s3Service = s3Service;
     }
 
     @GetMapping("/inquiry")
@@ -59,6 +61,7 @@ public class InquiryController {
         List<Car> carList = carService.findCarByWeddingId(informationList);
         List<Etc> etcList = etcService.findEtcByWeddingId(informationList);
         List<OpenGraph> openGraphList = openGraphService.findOpenGraphByWeddingId(informationList);
+        List<ImagesUrl> imagesUrlList = s3Service.findImagesUrlByWeddingId(informationList);
 
         List<Map<String, Object>> informationJson = processInformation(informationList);
         Map<String, Object> locationJson = processLocation(locationList);
@@ -71,6 +74,7 @@ public class InquiryController {
         Object carJson = processCarMessage(carList);
         Object etcJson = processInfoMessage(etcList);
         Map<String, Object> openGraphJson = processOpenGraph(openGraphList);
+        List<String> imagesJson = processImagesUrl(imagesUrlList);
 
         Map<String, Object> responseBody = informationJson.isEmpty() ? new HashMap<>() : informationJson.get(0);
         responseBody.put("location", locationJson);
@@ -83,6 +87,7 @@ public class InquiryController {
         responseBody.put("car", carJson);
         responseBody.put("etc", etcJson);
         responseBody.put("open_graph", openGraphJson);
+        responseBody.put("images", imagesJson);
 
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
@@ -145,6 +150,18 @@ public class InquiryController {
         openGraphJson.put("subtitle", openGraph.getSubtitle());
 
         return openGraphJson;
+    }
+
+    private List<String> processImagesUrl(List<ImagesUrl> imagesUrlList) {
+        List<String> imagesJson = imagesUrlList.stream()
+                .map(ImagesUrl::getUrl)
+                .map(url -> {
+                    int lastIndex = url.lastIndexOf('/');
+                    return lastIndex != -1 ? url.substring(lastIndex + 1) : url;
+                })
+                .toList();
+
+        return imagesJson;
     }
 
     private Object processWelcomeMessage(List<Welcome> welcomeList) {
