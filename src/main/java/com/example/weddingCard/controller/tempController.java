@@ -63,7 +63,7 @@ public class tempController {
                                                           @RequestParam(value = "images14", required = false) MultipartFile images14,
                                                           @RequestParam(value = "images15", required = false) MultipartFile images15,
                                                           @RequestParam(value = "thumbnail") MultipartFile thumbnail,
-                                                          @RequestParam("json") String jsonRequest,
+                                                          @RequestParam("json") MultipartFile jsonRequest,
                                                           @RequestHeader("Uid") String userId) {
         WecaResponse response;
         WecaUser user = userIdService.saveOrUpdateUserId(userId);
@@ -80,30 +80,29 @@ public class tempController {
             return ResponseEntity.badRequest().body(response);
         }
         try {
-            InformationDTO informationDTO = objectMapper.readValue(jsonRequest, InformationDTO.class);
+            String jsonRequestToDto = new String(jsonRequest.getBytes(), StandardCharsets.UTF_8);
+            InformationDTO informationDTO = objectMapper.readValue(jsonRequestToDto, InformationDTO.class);
             Information information = informationService.saveInformation(informationDTO, user);
 
-            System.out.println(jsonRequest);
-
             WelcomeDTO welcomeDTO = new WelcomeDTO();
-            welcomeDTO.setWelcomeMessage(parsingEditorState.parsingEditorStateToString(jsonRequest, "welcome"));
+            welcomeDTO.setWelcomeMessage(parsingEditorState.parsingEditorStateToString(jsonRequestToDto, "welcome"));
             welcomeService.saveWelcome(welcomeDTO, information);
 
             SubwayDTO subwayDTO = new SubwayDTO();
-            subwayDTO.setSubwayMessage(parsingEditorState.parsingEditorStateToString(jsonRequest, "subway"));
+            subwayDTO.setSubwayMessage(parsingEditorState.parsingEditorStateToString(jsonRequestToDto, "subway"));
             subwayService.saveSubway(subwayDTO, information);
 
             BusDTO busDTO = new BusDTO();
-            busDTO.setBusMessage(parsingEditorState.parsingEditorStateToString(jsonRequest, "bus"));
+            busDTO.setBusMessage(parsingEditorState.parsingEditorStateToString(jsonRequestToDto, "bus"));
             busService.saveBus(busDTO, information);
 
             CarDTO carDTO = new CarDTO();
-            carDTO.setCarMessage(parsingEditorState.parsingEditorStateToString(jsonRequest, "car"));
+            carDTO.setCarMessage(parsingEditorState.parsingEditorStateToString(jsonRequestToDto, "car"));
             carService.saveCar(carDTO, information);
 
             EtcDTO etcDTO = new EtcDTO();
-            etcDTO.setTransportType(parsingEditorState.parsingInsideJsonObject(jsonRequest, "etc", "transport_type"));
-            etcDTO.setInfo(parsingEditorState.parsingInsideEditorStateToString(jsonRequest, "etc", "info"));
+            etcDTO.setTransportType(parsingEditorState.parsingInsideJsonObject(jsonRequestToDto, "etc", "transport_type"));
+            etcDTO.setInfo(parsingEditorState.parsingInsideEditorStateToString(jsonRequestToDto, "etc", "info"));
             etcService.saveEtc(etcDTO, information);
 
 

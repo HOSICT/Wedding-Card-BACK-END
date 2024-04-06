@@ -63,7 +63,7 @@ public class InformationController {
                                                    @RequestParam(value = "images14", required = false) MultipartFile images14,
                                                    @RequestParam(value = "images15", required = false) MultipartFile images15,
                                                    @RequestParam(value = "thumbnail") MultipartFile thumbnail,
-                                                   @RequestParam("json") String jsonRequest,
+                                                   @RequestParam("json") MultipartFile jsonRequest,
                                                    @RequestHeader("Uid") String userId) {
         WecaResponse response;
         WecaUser user = userIdService.saveOrUpdateUserId(userId);

@@ -35,7 +35,7 @@ public class InformationService {
     }
 
     @Transactional
-    public Information saveInformation(InformationDTO informationDTO, WecaUser user){
+    public Information saveInformation(InformationDTO informationDTO, WecaUser user) {
         Information information = dtoInformationEntity(informationDTO, user);
         information = informationRepository.save(information);
 
@@ -45,6 +45,13 @@ public class InformationService {
         managementService.saveManagement(informationDTO, information);
         contentsService.saveContents(informationDTO, information);
         openGraphService.saveOpenGraph(informationDTO, information);
+
+        return information;
+    }
+
+    public Information saveTemplateId(InformationDTO informationDTO, WecaUser wecaUser) {
+        Information information = dtoInformationTemplateEntity(informationDTO, wecaUser);
+        information = informationRepository.save(information);
 
         return information;
     }
@@ -65,6 +72,16 @@ public class InformationService {
         information.setUser(wecaUser);
         information.setDate(adjustDate(informationDTO.getDate()));
         information.setWelcomeAlign(informationDTO.getWelcomeAlign());
+        return information;
+    }
+
+    private Information dtoInformationTemplateEntity(InformationDTO informationDTO, WecaUser wecaUser) {
+        List<Information> findUserInformation = informationRepository.findByUser(wecaUser);
+        Information information = findUserInformation.get(0);
+
+        information.setUser(wecaUser);
+        information.setTemplateId(informationDTO.getTemplateId());
+
         return information;
     }
 
