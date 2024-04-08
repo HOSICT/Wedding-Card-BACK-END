@@ -4,6 +4,7 @@ import com.example.weddingCard.dto.GuestBookDTO;
 import com.example.weddingCard.entity.GuestBook;
 import com.example.weddingCard.entity.Information;
 import com.example.weddingCard.repository.InformationRepository;
+import com.example.weddingCard.response.WecaResponse;
 import com.example.weddingCard.service.GuestBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -64,14 +65,13 @@ public class GuestBookController {
     }
 
     @DeleteMapping(("/guestbook"))
-    public ResponseEntity<Map<String, Object>> deleteGuestBook(@RequestParam("wedding_id") Integer weddingId,
-                                                               @RequestParam("id") Integer commentId) {
+    public ResponseEntity<WecaResponse> deleteGuestBook(@RequestParam("wedding_id") Integer weddingId,
+                                                        @RequestParam("id") Integer commentId) {
+        WecaResponse response;
+
         guestBookService.deleteByWeddingIdAndCommentId(weddingId, commentId);
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", 200);
-        response.put("msg", "ok");
-
+        response = new WecaResponse(200, "ok");
         return ResponseEntity.ok(response);
     }
 
