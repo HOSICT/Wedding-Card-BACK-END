@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Service
 public class GuestBookService {
@@ -24,6 +25,10 @@ public class GuestBookService {
         guestBook = guestBookRepository.save(guestBook);
 
         return guestBook;
+    }
+
+    public List<GuestBook> findByWeddingId(Information weddingId) {
+        return guestBookRepository.findByWeddingId(weddingId);
     }
 
     private GuestBook dtoGuestBookEntity(GuestBookDTO guestBookDTO, Information information) {

@@ -7,13 +7,12 @@ import com.example.weddingCard.repository.InformationRepository;
 import com.example.weddingCard.service.GuestBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 public class GuestBookController {
@@ -40,6 +39,26 @@ public class GuestBookController {
         Map<String, Object> data = new HashMap<>();
         data.put("id", information.getWeddingId().toString());
         responseBody.put("data", data);
+
+        return ResponseEntity.ok(responseBody);
+    }
+
+    @GetMapping(("/guestbook"))
+    public ResponseEntity<Map<String, Object>> getGuestBooks(@RequestParam("wedding_id") Information weddingId) {
+        List<GuestBook> guestBooks = guestBookService.findByWeddingId(weddingId);
+        List<GuestBookDTO> guestBookDTOs = guestBooks.stream()
+                .map(guestBook -> {
+                    GuestBookDTO dto = new GuestBookDTO();
+                    dto.setName(guestBook.getName());
+                    dto.setDate(guestBook.getDate());
+                    dto.setContent(guestBook.getContent());
+                    dto.setManagementPassword(guestBook.getManagementPassword());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("guestbook", guestBookDTOs);
 
         return ResponseEntity.ok(responseBody);
     }
