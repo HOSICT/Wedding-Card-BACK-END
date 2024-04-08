@@ -17,6 +17,9 @@ public class GuestBook {
     @JoinColumn(name = "wedding_id")
     private Information weddingId;
 
+    @Column(name = "comment_id")
+    private Integer commentId;
+
     private String name;
 
     private LocalDateTime date;
@@ -40,6 +43,14 @@ public class GuestBook {
 
     public void setWeddingId(Information weddingId) {
         this.weddingId = weddingId;
+    }
+
+    public Integer getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(Integer commentId) {
+        this.commentId = commentId;
     }
 
     public String getName() {

@@ -1,7 +1,6 @@
 package com.example.weddingCard.service;
 
 import com.example.weddingCard.dto.GuestBookDTO;
-import com.example.weddingCard.dto.InformationDTO;
 import com.example.weddingCard.entity.GuestBook;
 import com.example.weddingCard.entity.Information;
 import com.example.weddingCard.repository.GuestBookRepository;
@@ -22,6 +21,9 @@ public class GuestBookService {
     @Transactional
     public GuestBook saveGuestBook(GuestBookDTO guestBookDTO, Information information) {
         GuestBook guestBook = dtoGuestBookEntity(guestBookDTO, information);
+        Integer maxCommentId = guestBookRepository.findMaxCommentIdByWeddingId(information.getWeddingId());
+        guestBook.setCommentId(maxCommentId + 1);
+
         guestBook = guestBookRepository.save(guestBook);
 
         return guestBook;
@@ -29,6 +31,10 @@ public class GuestBookService {
 
     public List<GuestBook> findByWeddingId(Information weddingId) {
         return guestBookRepository.findByWeddingId(weddingId);
+    }
+
+    public void deleteByWeddingIdAndCommentId(Integer weddingId, Integer commentId) {
+        guestBookRepository.deleteByWeddingIdAndCommentId(weddingId, commentId);
     }
 
     private GuestBook dtoGuestBookEntity(GuestBookDTO guestBookDTO, Information information) {

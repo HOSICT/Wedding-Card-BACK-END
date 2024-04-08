@@ -62,4 +62,17 @@ public class GuestBookController {
 
         return ResponseEntity.ok(responseBody);
     }
+
+    @DeleteMapping(("/guestbook"))
+    public ResponseEntity<Map<String, Object>> deleteGuestBook(@RequestParam("wedding_id") Integer weddingId,
+                                                               @RequestParam("id") Integer commentId) {
+        guestBookService.deleteByWeddingIdAndCommentId(weddingId, commentId);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", 200);
+        response.put("msg", "ok");
+
+        return ResponseEntity.ok(response);
+    }
+
 }
