@@ -49,13 +49,6 @@ public class InformationService {
         return information;
     }
 
-    public Information saveTemplateId(InformationDTO informationDTO, WecaUser wecaUser) {
-        Information information = dtoInformationTemplateEntity(informationDTO, wecaUser);
-        information = informationRepository.save(information);
-
-        return information;
-    }
-
     public List<Information> findInformationByUserId(WecaUser wecaUser) {
         return informationRepository.findByUser(wecaUser);
     }
@@ -93,4 +86,14 @@ public class InformationService {
 
         return adjustedDate;
     }
+
+    @Transactional
+    public Information saveTemplateId(InformationDTO informationDTO, WecaUser user) {
+        Information information = informationRepository.findByUser(user).stream()
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Information not found for user: " + user.getUserId()));
+        information.setTemplateId(informationDTO.getTemplateId());
+        return informationRepository.save(information);
+    }
+
 }
