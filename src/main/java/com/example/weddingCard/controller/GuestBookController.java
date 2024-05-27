@@ -29,7 +29,7 @@ public class GuestBookController {
 
     @PostMapping("/guestbook")
     public ResponseEntity<Map<String, Object>> uploadGuestBook(@RequestParam("wedding_id") Integer weddingId,
-                                               @RequestBody GuestBookDTO guestBookRequest) {
+                                                               @RequestBody GuestBookDTO guestBookRequest) {
         Information information = informationRepository.findById(weddingId)
                 .orElseThrow(() -> new RuntimeException("Wedding ID not found: " + weddingId));
         GuestBook guestBook = guestBookService.saveGuestBook(guestBookRequest, information);
@@ -44,9 +44,11 @@ public class GuestBookController {
         return ResponseEntity.ok(responseBody);
     }
 
-    @GetMapping(("/guestbook"))
-    public ResponseEntity<Map<String, Object>> getGuestBooks(@RequestParam("wedding_id") Information weddingId) {
-        List<GuestBook> guestBooks = guestBookService.findByWeddingId(weddingId);
+    @GetMapping("/guestbook")
+    public ResponseEntity<Map<String, Object>> getGuestBooks(@RequestParam("wedding_id") Integer weddingId) {
+        Information information = informationRepository.findById(weddingId)
+                .orElseThrow(() -> new RuntimeException("Wedding ID not found: " + weddingId));
+        List<GuestBook> guestBooks = guestBookService.findByWeddingId(information);
         List<GuestBookDTO> guestBookDTOs = guestBooks.stream()
                 .map(guestBook -> {
                     GuestBookDTO dto = new GuestBookDTO();
@@ -64,15 +66,12 @@ public class GuestBookController {
         return ResponseEntity.ok(responseBody);
     }
 
-    @DeleteMapping(("/guestbook"))
+    @DeleteMapping("/guestbook")
     public ResponseEntity<WecaResponse> deleteGuestBook(@RequestParam("wedding_id") Integer weddingId,
                                                         @RequestParam("id") Integer commentId) {
-        WecaResponse response;
-
         guestBookService.deleteByWeddingIdAndCommentId(weddingId, commentId);
 
-        response = new WecaResponse(200, "ok");
+        WecaResponse response = new WecaResponse(200, "ok");
         return ResponseEntity.ok(response);
     }
-
 }
