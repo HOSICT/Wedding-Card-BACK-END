@@ -2,6 +2,7 @@ package com.example.weddingCard.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.example.weddingCard.entity.ImagesUrl;
 import com.example.weddingCard.entity.Information;
 import com.example.weddingCard.repository.ImagesUrlRepository;
@@ -95,6 +96,17 @@ public class S3Service {
 
     public List<ImagesUrl> findImagesUrlByWeddingId(List<Information> information) {
         return imagesUrlRepository.findByWeddingIdIn(information);
+    }
+
+    @Transactional
+    public void deleteFilesFromS3(Information information) {
+        List<ImagesUrl> imagesUrls = imagesUrlRepository.findByWeddingId(information);
+        for (ImagesUrl imagesUrl : imagesUrls) {
+            String url = imagesUrl.getUrl();
+            String fileName = url.substring(url.lastIndexOf("/") + 1);
+            amazonS3.deleteObject(new DeleteObjectRequest(bucketName, fileName));
+            imagesUrlRepository.delete(imagesUrl);
+        }
     }
 
 }
