@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
 import java.util.List;
 
 @Service
@@ -21,17 +22,19 @@ public class InformationService {
     private final ContentsService contentsService;
     private final OpenGraphService openGraphService;
     private final LocationService locationService;
+    private final S3Service s3Service;
 
     @Autowired
     public InformationRepository informationRepository;
 
     @Autowired
-    public InformationService(AccountsService accountsService, ManagementService managementService, ContentsService contentsService, OpenGraphService openGraphService, LocationService locationService) {
+    public InformationService(AccountsService accountsService, ManagementService managementService, ContentsService contentsService, OpenGraphService openGraphService, LocationService locationService, S3Service s3Service) {
         this.accountsService = accountsService;
         this.managementService = managementService;
         this.contentsService = contentsService;
         this.openGraphService = openGraphService;
         this.locationService = locationService;
+        this.s3Service = s3Service;
     }
 
     @Transactional
@@ -94,6 +97,16 @@ public class InformationService {
                 .orElseThrow(() -> new RuntimeException("Information not found for user: " + user.getUserId()));
         information.setTemplateId(informationDTO.getTemplateId());
         return informationRepository.save(information);
+    }
+
+    @Transactional
+    public void deleteOldInformation() {
+        LocalDateTime oneDayAgo = LocalDateTime.now(ZoneId.of("Asia/Seoul")).minusDays(1);
+        List<Information> oldInformation = informationRepository.findAllByDateBefore(oneDayAgo);
+        for (Information info : oldInformation) {
+            s3Service.deleteFilesFromS3(info);
+            informationRepository.delete(info);
+        }
     }
 
 }
